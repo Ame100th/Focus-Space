@@ -1,12 +1,31 @@
-import React from "react";
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Touchable } from "react-native";
+import React, {useState} from "react";
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, } from "react-native";
+import credentials from "../credentials.json";
 
-const Signin = () => {
+type signProps = {setIsSignedIn: (isSignedIn: boolean) => void, username: string, setUsername: (username: string) => void};
+
+const Signin: React.FC<signProps> = ({setIsSignedIn, username, setUsername}) => {
+    
+    const [password, setPassword] = useState<string>("");
+    const handleSignin = () => { 
+        const lowername = username.toLowerCase();
+        const user = credentials.users.find((user) => 
+            user.username.toLowerCase() === lowername && user.password === password
+        );
+        if(user){
+            setIsSignedIn(true);
+        } else {
+            alert("Sign in failed");
+        }
+    };
+    
+    
   return (
     <View style={styles.container}>
-      <TextInput style={styles.input} placeholder="Email" />
-      <TextInput style={styles.input} placeholder="Password" />
-      <TouchableOpacity style={styles.button}>
+        <Text style={styles.signtext}>Sign in</Text>
+      <TextInput style={styles.input} placeholder="username" value={username} onChangeText={setUsername} />
+      <TextInput style={styles.input} placeholder="Password" value={password} onChangeText={setPassword}/>
+      <TouchableOpacity style={styles.button} onPress={() => handleSignin()}>
         <Text style={styles.signin}>Sign in</Text>
       </TouchableOpacity>
     </View>
@@ -27,6 +46,7 @@ const styles = StyleSheet.create({
         width: 200,
         height: 40,
         margin: 3,
+        paddingLeft: 10,
     },
 
     button:{
@@ -45,8 +65,10 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     signtext:{
-        fontSize: 30,
+        fontSize: 25,
         marginBottom: 20,
+        color: "#19a0ae",
+        fontWeight: "bold",
        
     }
 })

@@ -1,16 +1,15 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import Signin from '../components/Signin';
-import { Image } from 'react-native';
+import Welcome from '../components/Welcome';
 
 const App = () => {
+    const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
+    const [username, setUsername] = useState<string>("");
+
     return (
         <View style={styles.container}>
-            <Text style={styles.signtext}>Focus Space</Text>
-            <Image style={styles.image}
-            source={require('../components/Focus-Space.png')}
-            />
-            <Signin />
+            {isSignedIn ? <Welcome username={username} setUsername={setUsername}/> : <Signin setIsSignedIn={setIsSignedIn} username={username} setUsername={setUsername} />}
         </View>
     );
 }
@@ -22,18 +21,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         backgroundColor: '#d8f5f8'
     },
-    image:{
-        width:200,
-        height: 200,
-        resizeMode: 'contain',
-        opacity: .8,
-    },
-    signtext:{
-        fontSize: 30,
-        color: "#19a0ae",
-        fontWeight: "bold",
-        padding: 30,
-    }
+    
+    
 
 });
 
