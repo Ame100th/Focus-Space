@@ -6,17 +6,26 @@ type signProps = {setIsSignedIn: (isSignedIn: boolean) => void, username: string
 
 const Signin: React.FC<signProps> = ({setIsSignedIn, username, setUsername}) => {
     
+
+
     const [password, setPassword] = useState<string>("");
     const handleSignin = () => { 
         const lowername = username.toLowerCase();
         const user = credentials.users.find((user) => 
             user.username.toLowerCase() === lowername && user.password === password
         );
+        const usernameRegex = /^.{6,}$/;
+        if (!usernameRegex.test(lowername)) {
+            alert("Username must be above 5 characters.");
+            return;
+        }
         if(user){
             setIsSignedIn(true);
         } else {
             alert("Sign in failed");
         }
+        
+    
     };
     
     
