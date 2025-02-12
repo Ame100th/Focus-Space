@@ -13,7 +13,6 @@ const Signin: React.FC<signProps> = ({setIsSignedIn, username, setUsername}) => 
             user.username.toLowerCase() === lowername && user.password === password.trim()
         );
 
-        const regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*\(\)+_\-=\[\]{};':"\\|,.<>\/?]).+$/;
         if (lowername === ""){
             alert("Username is Invalid");
             return;
@@ -31,14 +30,26 @@ const Signin: React.FC<signProps> = ({setIsSignedIn, username, setUsername}) => 
             alert("Password must be at least 8 characters long.");
             return;
         }
-        else if (!regex.test(password)) {
-            alert("Incorrect password");
+        else if (!/^[A-Z]{1,}/.test(password)) {
+            alert("Password must contain at least one uppercase letter.");
+            return;
+        }
+        else if (!/[a-z]/.test(password)){
+            alert("Password must contain at least one lowercase letter.");
+            return;
+        }
+        else if(!/[0-9]{1,}/.test(password)){
+            alert("Password must contain at least one number.");
+            return;
+        }
+        else if(!/(?=.*[!@#\$%\^&\*\(\)+_\-=\[\]{};':"\\|,.<>\/?])/.test(password)){
+            alert("Password must contain at least one special character.");
             return;
         }
         if(user){
             setIsSignedIn(true);
         } else {
-            alert("Invalid username or password.");
+            alert("You don't have an account, Please Sign up.");
             return;
         }
     };
