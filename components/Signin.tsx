@@ -1,22 +1,50 @@
 import React, {useState} from "react";
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, } from "react-native";
+import { View, Text, TextInput, Image, StyleSheet, TouchableOpacity, } from "react-native";
 import credentials from "../credentials.json";
+import { Link } from "expo-router";
 
 type signProps = {setIsSignedIn: (isSignedIn: boolean) => void, username: string, setUsername: (username: string) => void};
 
 const Signin: React.FC<signProps> = ({setIsSignedIn, username, setUsername}) => {
     
-
-
     const [password, setPassword] = useState<string>("");
     const handleSignin = () => { 
-        const lowername = username.toLowerCase();
+        const lowername = username.toLowerCase().trim();
         const user = credentials.users.find((user) => 
-            user.username.toLowerCase() === lowername && user.password === password
+            user.username.toLowerCase() === lowername && user.password === password.trim()
         );
-        const usernameRegex = /^.{6,}$/;
-        if (!usernameRegex.test(lowername)) {
+        const usernameRegex = /^.{5,}$/;
+        if (lowername === ""){
+            alert("Username is valid");
+            return;
+        }
+        else if (!usernameRegex.test(lowername)) {
             alert("Username must be above 5 characters.");
+            return;
+        }
+        
+        if (password === "") {
+            alert("Password is required.");
+            return;
+        }
+        else if (password.length < 8) {
+            alert("Password must be at least 8 characters long.");
+            return;
+        }
+        else if (!/[A-Z]/.test(password)) {
+            alert("Password must contain at least one uppercase letter.");
+            return;
+        }
+        else if (!/[a-z]/.test(password)) {
+            alert("Password must contain at least one lowercase letter.");
+            return;
+        }
+        else if (!/[0-9]/.test(password)) {
+            alert("Password must contain at least one digit.");
+            return;
+        }
+        else if (!/[!@#\$%\^&\*\(\)+_\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
+            alert("Password must contain at least one special character.");
             return;
         }
         if(user){
@@ -24,19 +52,25 @@ const Signin: React.FC<signProps> = ({setIsSignedIn, username, setUsername}) => 
         } else {
             alert("Sign in failed");
         }
-        
-    
     };
-    
     
   return (
     <View style={styles.container}>
-        <Text style={styles.signtext}>Sign in</Text>
-      <TextInput style={styles.input} placeholder="username" value={username} onChangeText={setUsername} />
+        <Image style={styles.imagelogo} source={require('../components/focus_logo.png')}/>
+        
+        <Text style={styles.signtext}>Sign In To Your Account</Text>
+      <TextInput style={styles.input} placeholder="Username" value={username} onChangeText={setUsername} />
       <TextInput style={styles.input} placeholder="Password" value={password} onChangeText={setPassword}/>
       <TouchableOpacity style={styles.button} onPress={() => handleSignin()}>
         <Text style={styles.signin}>Sign in</Text>
       </TouchableOpacity>
+      <Text style={{fontWeight: "bold", marginTop: 100,}}>Don't have an account? Sign up <Text style={{color: "#19a0ae", textDecorationLine: "underline", fontWeight:"bold" }}>Here</Text></Text>
+      <TouchableOpacity>
+        <Text style={{fontWeight: "bold", textDecorationLine: "underline", marginTop:40}}>Forgot Your Password?</Text>
+      </TouchableOpacity>
+        <Text style={{fontWeight: "bold", marginTop: 100}}>Need Help? <TouchableOpacity>
+        <Text style={{fontWeight: "bold", textDecorationLine: "underline",}}>Contact Us</Text>
+      </TouchableOpacity></Text>
     </View>
   );
 };
@@ -52,7 +86,7 @@ const styles = StyleSheet.create({
         borderWidth: .6,
         borderColor: "#19a0ae",
         borderRadius: 9,
-        width: 200,
+        width: 310,
         height: 40,
         margin: 3,
         paddingLeft: 10,
@@ -62,7 +96,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#19a0ae",
         padding: 12,
         borderRadius: 9,
-        width: 100,
+        width: 300,
         marginTop: 15,
         alignItems: "center",
         
@@ -74,12 +108,20 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     signtext:{
-        fontSize: 25,
-        marginBottom: 20,
-        color: "#19a0ae",
+        fontSize: 30,
+        marginBottom: 40,
         fontWeight: "bold",
+        fontFamily: "arial",
        
-    }
-})
+    },
+    imagelogo:{
+        width:200,
+        height: 200,
+        resizeMode: 'contain',
+        opacity: .9,
+        
+},
+
+});
 
 export default Signin;
