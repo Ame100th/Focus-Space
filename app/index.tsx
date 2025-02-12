@@ -3,6 +3,7 @@ import { Text, View, StyleSheet } from 'react-native';
 import Signin from '../components/Signin';
 import Welcome from '../components/Welcome';
 
+
 const App = () => {
     const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
     const [username, setUsername] = useState<string>("");
