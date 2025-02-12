@@ -8,6 +8,10 @@ export default function Edmonton() {
     <View style={styles.container}>
       <Text style={styles.text}>Welcome to Edmonton</Text>
       <Image style={styles.image} source={require('../../components/edmonton.jpg')} />
+      <Text>Edmonton is the capital city of Alberta, Canada. It is known for its beautiful river valley, 
+          which offers over 160 km of recreational trails, wildlife viewing, and city views. 
+          The city is also home to the West Edmonton Mall, the largest shopping mall in North America, 
+          which includes over 800 stores, a water park, an amusement park, an ice rink, and more.</Text>
       <Pressable onPress={handlePress}>
               <Text>Go to City Edmonton</Text>
             </Pressable>

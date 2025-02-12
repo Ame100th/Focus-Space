@@ -1,7 +1,7 @@
 import React from 'react';
-import { StatusBar } from 'expo-status-bar'; 
 import { View, Text, StyleSheet, Image, TouchableOpacity, Button } from 'react-native';
 import ButtonTemplate from "../components/button_template";
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 type WelcomeProps = {username: string, setUsername: (username: string) => void};
 
@@ -18,7 +18,7 @@ const Welcome:React.FC<WelcomeProps> = ({username}) => {
             <TouchableOpacity style={styles.button}>
                 <Text style={styles.buttonText}>Get Started</Text>
             </TouchableOpacity>
-            <ButtonTemplate link="/tabs" text="Tabs" color="green" />
+            <ButtonTemplate link="/tabs" text="Tabs" color="#19a0ae" />
         </View>
     );
 };

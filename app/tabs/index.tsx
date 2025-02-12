@@ -10,6 +10,10 @@ const TabsScreen = () => {
     <View style={styles.container}>
       <Text style={styles.text}>Welcome to Calgary</Text>
       <Image style={styles.image} source={require('../../components/calgary.jpg')} />
+      <Text>Known as the “Gateway to the Rockies,” Calgary hosts the annual Calgary Stampede,
+         often called “The Greatest Outdoor Show on Earth.” This world-famous rodeo and festival 
+         draws over a million visitors every July and showcases the city’s Western heritage, featuring
+          chuckwagon races, barrel racing, a parade, concerts, and more.</Text>
       <Pressable onPress={handlePress}>
         <Text>Go to City Calgary</Text>
       </Pressable>
