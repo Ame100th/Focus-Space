@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import { View, Text, TextInput, Image, StyleSheet, TouchableOpacity, } from "react-native";
 import credentials from "../credentials.json";
-import { Link } from "expo-router";
 
 type signProps = {setIsSignedIn: (isSignedIn: boolean) => void, username: string, setUsername: (username: string) => void};
 
@@ -13,12 +12,13 @@ const Signin: React.FC<signProps> = ({setIsSignedIn, username, setUsername}) => 
         const user = credentials.users.find((user) => 
             user.username.toLowerCase() === lowername && user.password === password.trim()
         );
-        const usernameRegex = /^.{5,}$/;
+
+        const regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*\(\)+_\-=\[\]{};':"\\|,.<>\/?]).+$/;
         if (lowername === ""){
-            alert("Username is valid");
+            alert("Username is Invalid");
             return;
         }
-        else if (!usernameRegex.test(lowername)) {
+        else if (lowername.length < 5) {
             alert("Username must be above 5 characters.");
             return;
         }
@@ -31,26 +31,15 @@ const Signin: React.FC<signProps> = ({setIsSignedIn, username, setUsername}) => 
             alert("Password must be at least 8 characters long.");
             return;
         }
-        else if (!/[A-Z]/.test(password)) {
-            alert("Password must contain at least one uppercase letter.");
-            return;
-        }
-        else if (!/[a-z]/.test(password)) {
-            alert("Password must contain at least one lowercase letter.");
-            return;
-        }
-        else if (!/[0-9]/.test(password)) {
-            alert("Password must contain at least one digit.");
-            return;
-        }
-        else if (!/[!@#\$%\^&\*\(\)+_\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
-            alert("Password must contain at least one special character.");
+        else if (!regex.test(password)) {
+            alert("Incorrect password");
             return;
         }
         if(user){
             setIsSignedIn(true);
         } else {
-            alert("Sign in failed");
+            alert("Invalid username or password.");
+            return;
         }
     };
     
