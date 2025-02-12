@@ -6,7 +6,6 @@ type WelcomeProps = {username: string, setUsername: (username: string) => void};
 const Welcome:React.FC<WelcomeProps> = ({username}) => {
     return (
         <View style={styles.container}>
-            <Text style={styles.signtext}>Focus Space</Text>
             <Image style={styles.image}
             source={require('../components/Focus-Space.png')}
             />
@@ -36,13 +35,14 @@ const styles = StyleSheet.create({
         height: 200,
         resizeMode: 'contain',
         opacity: .8,
+        marginBottom: 50,
     },
     title: {
         fontSize: 32,
         fontWeight: '700',
         color: '#333',
         textAlign: 'center',
-        marginBottom: 10,
+        marginBottom: 30,
     },
     subtitle: {
         fontSize: 18,
@@ -62,10 +62,5 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: '600',
     },
-    signtext:{
-        fontSize: 30,
-        color: "#19a0ae",
-        fontWeight: "bold",
-        paddingBottom: 40,
-    }
+
 });
