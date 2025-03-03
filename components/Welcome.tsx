@@ -1,9 +1,11 @@
+import { useRouter } from 'expo-router';
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 type WelcomeProps = {username: string, setUsername: (username: string) => void};
 
 const Welcome:React.FC<WelcomeProps> = ({username}) => {
+    const router = useRouter();
     return (
         <View style={styles.container}>
             <Image style={styles.image}
@@ -13,7 +15,7 @@ const Welcome:React.FC<WelcomeProps> = ({username}) => {
             <Text style={styles.subtitle}>
                 Stay focused, achieve your goals, and embrace productivity.
             </Text>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={() => router.push("Home")}>
                 <Text style={styles.buttonText}>Get Started</Text>
             </TouchableOpacity>
         </View>
