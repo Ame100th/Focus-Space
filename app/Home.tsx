@@ -1,12 +1,11 @@
+import { Picker } from "@react-native-picker/picker";
 import React, {useState, useEffect} from "react";
-import { View, Text, ActivityIndicator, Button, TextInput, StyleSheet} from "react-native";
+import { View, Text, TextInput, StyleSheet} from "react-native";
 
 const facts: React.FC = () => { 
     const [date, setDate] = useState<string>("");
     const [month, setMonth] = useState<string>("");
     const [fact, setFact] = useState<string>("");
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         if(!date || !month) {
@@ -29,7 +28,6 @@ const facts: React.FC = () => {
               setFact(result);
             } catch (error) {
               console.error(error);
-              setError("An error occurred. Please try again later.");
             }
           };
           fetchFact();
@@ -43,12 +41,25 @@ const facts: React.FC = () => {
                 value={date}
                 onChangeText={setDate}
             />
-            <TextInput
+            <Picker
                 style={styles.inputtext}
-                placeholder="Month"
-                value={month}
-                onChangeText={setMonth}
-            />
+                selectedValue={month}
+                onValueChange={setMonth}
+            >
+          <Picker.Item label="Select Month" value="" />
+          <Picker.Item label="January" value="1" />
+          <Picker.Item label="February" value="2" />
+          <Picker.Item label="March" value="3" />
+          <Picker.Item label="April" value="4" />
+          <Picker.Item label="May" value="5" />
+          <Picker.Item label="June" value="6" />
+          <Picker.Item label="July" value="7" />
+          <Picker.Item label="August" value="8" />
+          <Picker.Item label="September" value="9" />
+          <Picker.Item label="October" value="10" />
+          <Picker.Item label="November" value="11" />
+          <Picker.Item label="December" value="12" />
+              </Picker>
             {date.length === 2 && parseInt(date, 10) <= 31 && parseInt(month, 10) <= 12 && <Text>{fact}</Text>}
         </View>
         );
