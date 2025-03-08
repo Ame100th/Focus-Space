@@ -1,6 +1,7 @@
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import SupabasePage from './supabasePage';
 
 type WelcomeProps = {username: string, setUsername: (username: string) => void};
 
@@ -8,16 +9,17 @@ const Welcome:React.FC<WelcomeProps> = ({username}) => {
     const router = useRouter();
     return (
         <View style={styles.container}>
-            <Image style={styles.image}
+            {/* <Image style={styles.image}
             source={require('../components/Focus-Space.png')}
             />
             <Text style={styles.title}>Welcome {username} to Focus Space!</Text>
             <Text style={styles.subtitle}>
                 Stay focused, achieve your goals, and embrace productivity.
-            </Text>
-            <TouchableOpacity style={styles.button} onPress={() => router.push("Home")}>
+            </Text> */}
+            {/* <TouchableOpacity style={styles.button} onPress={() => router.push("Home")}>
                 <Text style={styles.buttonText}>Get Started</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
+            <SupabasePage />
         </View>
     );
 };
