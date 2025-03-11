@@ -1,116 +1,226 @@
-import React, {useState} from "react";
-import { View, Text, TextInput, Image, StyleSheet, TouchableOpacity, } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Dimensions,
+  SafeAreaView,
+} from "react-native";
 import credentials from "../credentials.json";
 
-type signProps = {setIsSignedIn: (isSignedIn: boolean) => void, username: string, setUsername: (username: string) => void};
+const { width } = Dimensions.get("window");
 
-const Signin: React.FC<signProps> = ({setIsSignedIn, username, setUsername}) => {
-    
-    const [password, setPassword] = useState<string>("");
-    const handleSignin = () => { 
-        const lowername = username.toLowerCase().trim();
-        const user = credentials.users.find((user) => 
-            user.username.toLowerCase() === lowername && user.password === password.trim()
-        );
+type SignProps = {
+  setIsSignedIn: (isSignedIn: boolean) => void;
+  username: string;
+  setUsername: (username: string) => void;
+};
 
-        const regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*\(\)+_\-=\[\]{};':"\\|,.<>\/?]).+$/;
-        if (lowername === ""){
-            alert("Username is Invalid");
-            return;
-        }
-        else if (lowername.length < 5) {
-            alert("Username must be above 5 characters.");
-            return;
-        }
-        
-        if (password === "") {
-            alert("Password is required.");
-            return;
-        }
-        else if (password.length < 8) {
-            alert("Password must be at least 8 characters long.");
-            return;
-        }
-        else if (!regex.test(password)) {
-            alert("Incorrect password");
-            return;
-        }
-        if(user){
-            setIsSignedIn(true);
-        } else {
-            alert("Invalid username or password.");
-            return;
-        }
-    };
-    
+const Signin: React.FC<SignProps> = ({ setIsSignedIn, username, setUsername }) => {
+  const [password, setPassword] = useState<string>("");
+
+  const handleSignin = () => {
+    const lowername = username.toLowerCase().trim();
+    const user = credentials.users.find(
+      (user) =>
+        user.username.toLowerCase() === lowername && user.password === password.trim()
+    );
+
+    const regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*\(\)+_\-=\[\]{};':"\\|,.<>\/?]).+$/;
+    if (lowername === "") {
+      alert("Username is Invalid");
+      return;
+    } else if (lowername.length < 5) {
+      alert("Username must be above 5 characters.");
+      return;
+    }
+
+    if (password === "") {
+      alert("Password is required.");
+      return;
+    } else if (password.length < 8) {
+      alert("Password must be at least 8 characters long.");
+      return;
+    } else if (!regex.test(password)) {
+      alert("Incorrect password");
+      return;
+    }
+    if (user) {
+      setIsSignedIn(true);
+    } else {
+      alert("Invalid username or password.");
+      return;
+    }
+  };
+
   return (
-    <View style={styles.container}>
-        <Image style={styles.imagelogo} source={require('../components/focus_logo.png')}/>
-        
-        <Text style={styles.signtext}>Sign In To Your Account</Text>
-      <TextInput style={styles.input} placeholder="Username" value={username} onChangeText={setUsername} />
-      <TextInput style={styles.input} placeholder="Password" value={password} onChangeText={setPassword}/>
-      <TouchableOpacity style={styles.button} onPress={() => handleSignin()}>
-        <Text style={styles.signin}>Sign in</Text>
-      </TouchableOpacity>
-      <Text style={{fontWeight: "bold", marginTop: 100,}}>Don't have an account? Sign up <Text style={{color: "#19a0ae", textDecorationLine: "underline", fontWeight:"bold" }}>Here</Text></Text>
-      <TouchableOpacity>
-        <Text style={{fontWeight: "bold", textDecorationLine: "underline", marginTop:40}}>Forgot Your Password?</Text>
-      </TouchableOpacity>
-        <Text style={{fontWeight: "bold", marginTop: 100}}>Need Help? <TouchableOpacity>
-        <Text style={{fontWeight: "bold", textDecorationLine: "underline",}}>Contact Us</Text>
-      </TouchableOpacity></Text>
-    </View>
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
+        <Image
+          source={require("../assets/Component2.png")}
+          style={styles.focuslogo}
+        />
+
+        <Text style={styles.signtext}>Sign Into Your Account</Text>
+        <View style={styles.textinputview}>
+          <Image
+            source={require("../assets/tabler_user.png")}
+            style={styles.uspaicon}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Username"
+            value={username}
+            onChangeText={setUsername}
+          />
+        </View>
+        <View style={styles.textinputview}>
+          <Image
+            source={require("../assets/arcticons_password.png")}
+            style={styles.uspaicon}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Password"
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry={true}
+          />
+        </View>
+        <TouchableOpacity style={styles.button} onPress={handleSignin}>
+          <Text style={styles.signin}>Sign in</Text>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Text style={styles.forgotText}>Forgot Your Password?</Text>
+        </TouchableOpacity>
+        <Text style={styles.orText}>Or sign in with</Text>
+        <View>
+          <TouchableOpacity style={styles.googlelogobutton}>
+            <Image
+              source={require("../assets/Component1.png")}
+              style={styles.viewgoogle}
+            />
+          </TouchableOpacity>
+        </View>
+        <Text style={styles.signupText}>
+          Don't have an account? Sign up{" "}
+          <Text style={styles.signupLink}>Here</Text>
+        </Text>
+
+        <Text style={styles.helpText}>
+          Need Help?{" "}
+          <TouchableOpacity>
+            <Text style={styles.contactText}>Contact Us</Text>
+          </TouchableOpacity>
+        </Text>
+      </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-    container:{
-        margin: 50,
-        alignItems: "center",
-        backgroundColor: '#d8f5f8'
-    },
-
-    input:{
-        borderWidth: .6,
-        borderColor: "#19a0ae",
-        borderRadius: 9,
-        width: 310,
-        height: 40,
-        margin: 3,
-        paddingLeft: 10,
-    },
-
-    button:{
-        backgroundColor: "#19a0ae",
-        padding: 12,
-        borderRadius: 9,
-        width: 300,
-        marginTop: 15,
-        alignItems: "center",
-        
-    },
-
-    signin:{
-        color: "white",
-        fontWeight: "bold",
-        fontSize: 16,
-    },
-    signtext:{
-        fontSize: 30,
-        marginBottom: 40,
-        fontWeight: "bold",
-        fontFamily: "arial",
-       
-    },
-    imagelogo:{
-        width:200,
-        height: 200,
-        resizeMode: 'contain',
-        opacity: .9,
-        
-},
-
+  safeArea: {
+    flex: 1,
+    backgroundColor: "#d8f5f8",
+  },
+  container: {
+    flex: 1,
+    alignItems: "center",
+    paddingHorizontal: width * 0.1,
+    justifyContent: "center",
+  },
+  focuslogo: {
+    width: "80%", // responsive width
+    height: undefined,
+    aspectRatio: 1, // maintain aspect ratio
+    resizeMode: "contain",
+    marginBottom: 20,
+  },
+  signtext: {
+    fontSize: 30,
+    marginBottom: 40,
+    fontWeight: "bold",
+    fontFamily: "arial",
+    textAlign: "center",
+  },
+  textinputview: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginVertical: 5,
+    width: "100%",
+  },
+  uspaicon: {
+    width: 18,
+    height: 18,
+    position: "absolute",
+    zIndex: 1,
+    left: 10,
+  },
+  input: {
+    backgroundColor: "white",
+    borderWidth: 0.6,
+    borderColor: "#19a0ae",
+    borderRadius: 9,
+    width: "100%",
+    height: 40,
+    paddingLeft: 35, // added padding to account for the icon
+  },
+  button: {
+    backgroundColor: "#19a0ae",
+    padding: 12,
+    borderRadius: 9,
+    width: "100%",
+    marginTop: 15,
+    alignItems: "center",
+    borderColor: "black",
+    borderWidth: 0.5,
+  },
+  signin: {
+    color: "black",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  forgotText: {
+    fontWeight: "bold",
+    textDecorationLine: "underline",
+    marginTop: 20,
+  },
+  orText: {
+    marginTop: 20,
+    fontSize: 16,
+  },
+  googlelogobutton: {
+    alignItems: "center",
+    marginVertical: 10,
+  },
+  viewgoogle: {
+    width: 120,
+    height: 120,
+    resizeMode: "contain",
+  },
+  signupText: {
+    fontWeight: "bold",
+    marginTop: 40,
+    textAlign: "center",
+  },
+  signupLink: {
+    color: "#19a0ae",
+    textDecorationLine: "underline",
+    fontWeight: "bold",
+  },
+  helpText: {
+    fontWeight: "bold",
+    marginTop: 20,
+    textAlign: "center",
+  },
+  contactText: {
+    fontWeight: "bold",
+    textDecorationLine: "underline",
+  },
 });
 
 export default Signin;
