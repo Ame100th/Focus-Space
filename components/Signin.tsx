@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+
+import { LinearGradient } from 'expo-linear-gradient';
 import {
   View,
   Text,
@@ -93,32 +95,32 @@ const Signin: React.FC<SignProps> = ({ setIsSignedIn, username, setUsername }) =
         <TouchableOpacity style={styles.button} onPress={handleSignin}>
           <Text style={styles.signin}>Sign in</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => alert("Not yet implemented, Sorry.")}>
           <Text style={styles.forgotText}>Forgot Your Password?</Text>
         </TouchableOpacity>
         <Text style={styles.orText}>Or sign in with</Text>
-        <View>
-          <TouchableOpacity style={styles.googlelogobutton}>
-            <Image
-              source={require("../assets/Component1.png")}
-              style={styles.viewgoogle}
-            />
+        <View style={styles.googleview}>
+          <TouchableOpacity>
+            <Text style={styles.googletext}>
+              <Text style={{ color: "#4285F4" }}>G</Text>
+              <Text style={{ color: "#EA4335" }}>o</Text>
+              <Text style={{ color: "#FBBC05" }}>o</Text>
+              <Text style={{ color: "#4285F4" }}>g</Text>
+              <Text style={{ color: "#34A853" }}>l</Text>
+              <Text style={{ color: "#EA4335" }}>e</Text>
+            </Text>
           </TouchableOpacity>
         </View>
-        <Text>
+        <TouchableOpacity>
+          <Text style={styles.signupLink}> Continue as a guest</Text>
+        </TouchableOpacity>
+        <Text style={styles.signupview}>
           Don't have an account? Sign up{" "}
           <TouchableOpacity>
           <Text style={styles.signupLink}>Here</Text>
           </TouchableOpacity>
         </Text>
-        <View style={styles.contactcontainer}>
-        <Text>
-          Need Help?{"  "}
-          <TouchableOpacity>
-            <Text style={styles.contactText}>Contact Us</Text>
-          </TouchableOpacity>
-        </Text>
-        </View>
+       
       </View>
     </SafeAreaView>
   );
@@ -145,6 +147,7 @@ const styles = StyleSheet.create({
   signtext: {
     fontSize: 30,
     marginBottom: 40,
+    marginTop: 30,
     fontWeight: "bold",
     fontFamily: "arial",
     textAlign: "center",
@@ -182,6 +185,36 @@ const styles = StyleSheet.create({
     borderColor: "black",
     borderWidth: 0.5,
   },
+  googleview:{
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: "100%"
+  },
+  googleimage:{
+      width: 27,
+      height: 27,
+      position: 'absolute',
+      zIndex: 1,
+      left: 120,
+      top: 22,
+  },
+  // googlebutton:{
+  //   borderRadius: 25,
+  //   width: 100,
+  //   alignItems: 'center',
+  //   padding: 12,
+  //   borderColor: "black",
+  //   borderWidth: .5,
+  //   marginBottom: 55,
+  //   marginTop: 15,
+  // },
+  googletext:{
+    fontWeight: 'bold',
+    marginBottom: 55,
+    marginTop: 15,
+    fontSize:28,
+  },
   signin: {
     color: "black",
     fontWeight: "bold",
@@ -193,12 +226,12 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   orText: {
-    marginTop: 20,
+    marginTop: 25,
     fontSize: 16,
   },
   googlelogobutton: {
     alignItems: "center",
-    marginVertical: 10,
+    
   },
   viewgoogle: {
     width: 120,
@@ -214,11 +247,15 @@ const styles = StyleSheet.create({
   contactcontainer:{
     flexDirection: 'row',
     verticalAlign: 'middle'
+    
   },
   contactText: {
     fontWeight: "bold",
     color: '#19a0ae',
     textDecorationLine: "underline",
+  },
+  signupview:{
+    margin: 20,
   },
 });
 
