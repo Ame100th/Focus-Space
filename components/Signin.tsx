@@ -105,17 +105,20 @@ const Signin: React.FC<SignProps> = ({ setIsSignedIn, username, setUsername }) =
             />
           </TouchableOpacity>
         </View>
-        <Text style={styles.signupText}>
+        <Text>
           Don't have an account? Sign up{" "}
+          <TouchableOpacity>
           <Text style={styles.signupLink}>Here</Text>
+          </TouchableOpacity>
         </Text>
-
-        <Text style={styles.helpText}>
-          Need Help?{" "}
+        <View style={styles.contactcontainer}>
+        <Text>
+          Need Help?{"  "}
           <TouchableOpacity>
             <Text style={styles.contactText}>Contact Us</Text>
           </TouchableOpacity>
         </Text>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -133,9 +136,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   focuslogo: {
-    width: "80%", // responsive width
+    width: "80%",
     height: undefined,
-    aspectRatio: 1, // maintain aspect ratio
+    aspectRatio: 1,
     resizeMode: "contain",
     marginBottom: 20,
   },
@@ -167,7 +170,7 @@ const styles = StyleSheet.create({
     borderRadius: 9,
     width: "100%",
     height: 40,
-    paddingLeft: 35, // added padding to account for the icon
+    paddingLeft: 35,
   },
   button: {
     backgroundColor: "#19a0ae",
@@ -202,23 +205,19 @@ const styles = StyleSheet.create({
     height: 120,
     resizeMode: "contain",
   },
-  signupText: {
-    fontWeight: "bold",
-    marginTop: 40,
-    textAlign: "center",
-  },
+ 
   signupLink: {
     color: "#19a0ae",
     textDecorationLine: "underline",
     fontWeight: "bold",
   },
-  helpText: {
-    fontWeight: "bold",
-    marginTop: 20,
-    textAlign: "center",
+  contactcontainer:{
+    flexDirection: 'row',
+    verticalAlign: 'middle'
   },
   contactText: {
     fontWeight: "bold",
+    color: '#19a0ae',
     textDecorationLine: "underline",
   },
 });
