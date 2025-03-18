@@ -99,8 +99,8 @@ const Signin: React.FC<SignProps> = ({ setIsSignedIn, username, setUsername }) =
           <Text style={styles.forgotText}>Forgot Your Password?</Text>
         </TouchableOpacity>
         <Text style={styles.orText}>Or sign in with</Text>
-        <View style={styles.googleview}>
-          <TouchableOpacity>
+        <View>
+          <TouchableOpacity style={styles.googleborder}>
             <Text style={styles.googletext}>
               <Text style={{ color: "#4285F4" }}>G</Text>
               <Text style={{ color: "#EA4335" }}>o</Text>
@@ -136,9 +136,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: width * 0.1,
     justifyContent: "center",
+    marginBottom: width * 0.3
   },
   focuslogo: {
-    width: "80%",
+    width: "90%",
     height: undefined,
     aspectRatio: 1,
     resizeMode: "contain",
@@ -146,8 +147,7 @@ const styles = StyleSheet.create({
   },
   signtext: {
     fontSize: 30,
-    marginBottom: 40,
-    marginTop: 30,
+    marginBottom: 30,
     fontWeight: "bold",
     fontFamily: "arial",
     textAlign: "center",
@@ -177,20 +177,15 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: "#19a0ae",
-    padding: 12,
+    padding: 9,
     borderRadius: 9,
-    width: "100%",
+    width: "95%",
     marginTop: 15,
     alignItems: "center",
     borderColor: "black",
     borderWidth: 0.5,
   },
-  googleview:{
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: "100%"
-  },
+
   googleimage:{
       width: 27,
       height: 27,
@@ -212,8 +207,16 @@ const styles = StyleSheet.create({
   googletext:{
     fontWeight: 'bold',
     marginBottom: 55,
-    marginTop: 15,
-    fontSize:28,
+    marginTop: 5,
+    fontSize:30,
+    borderRadius: 100,
+  },
+
+  googleborder:{
+    borderWidth: 2,
+    width: 200,
+    alignItems: 'center',
+    height: 'auto'
   },
   signin: {
     color: "black",
@@ -226,8 +229,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   orText: {
-    marginTop: 25,
-    fontSize: 16,
+    marginTop: 35,
+    fontSize: 15,
   },
   googlelogobutton: {
     alignItems: "center",
