@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { Text, View, StyleSheet } from 'react-native';
-import Signin from '../components/Signin';
-import Welcome from '../components/Welcome';
+import Signin from "../app/Signin";
+import Welcome from '../app/Welcome';
 
 const App = () => {
     const [isSignedIn, setIsSignedIn] = useState<boolean>(false);

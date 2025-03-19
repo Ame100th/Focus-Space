@@ -7,15 +7,17 @@ import {
   Dimensions,
   Image
 } from 'react-native';
+import { useRouter } from 'expo-router';
 
 const { width } = Dimensions.get('window');
 
-type WelcomeProps = {
+type SettingsProps = {
   username: string;
   setUsername: (username: string) => void;
 };
 
-const Welcome: React.FC<WelcomeProps> = ({ username, setUsername }) => {
+const Settings: React.FC<SettingsProps> = ({ username, setUsername }) => {
+  const router = useRouter();
   return (
     <View style={styles.container}>
         <Image source={require("../assets/Focus-Space3.png")}
@@ -24,21 +26,27 @@ const Welcome: React.FC<WelcomeProps> = ({ username, setUsername }) => {
         style={{position: 'absolute', width: "100%", top: width * .9}} /> 
       <View style={styles.topBar}>
         
-        <TouchableOpacity >
-        <Image source={require("../assets/notifications.png")}
+        <TouchableOpacity onPress={() => router.push("Welcome")}>
+        <Image source={require("../assets/back.png")}
         style={styles.notif}
         />
-        </TouchableOpacity>
-        <TouchableOpacity>
-            <Image source={require("../assets/settings.png")}
-            style={styles.notif}
-            />
         </TouchableOpacity>
       </View>
 
       {/* Main Content Area */}
       <View style={styles.mainContent}>
-        
+        <TouchableOpacity>
+        <Text style={styles.textmain}>General preferences</Text>
+        </TouchableOpacity>
+        <TouchableOpacity>
+        <Text style={styles.textmain}>Notification Preferences</Text>
+        </TouchableOpacity>
+        <TouchableOpacity>
+        <Text style={styles.textmain}>Theme</Text>
+        </TouchableOpacity>
+        <TouchableOpacity>
+        <Text style={styles.textmain}>Reset</Text>
+        </TouchableOpacity>
       </View>
 
       {/* Bottom Navigation Bar */}
@@ -64,7 +72,7 @@ const Welcome: React.FC<WelcomeProps> = ({ username, setUsername }) => {
   );
 };
 
-export default Welcome;
+export default Settings;
 
 const styles = StyleSheet.create({
   container: {
@@ -109,6 +117,18 @@ const styles = StyleSheet.create({
     padding: 20,
     justifyContent: 'center',
     alignItems: 'center',
+    bottom: width * 0.4,
+  },
+
+  textmain:{
+    padding: 10,
+    margin: 7,
+    backgroundColor: '#30B0C7',
+    width: width * 0.5,
+    textAlign: 'center',
+    borderRadius: 7,
+    fontSize: 15,
+    fontWeight: '900'
   },
   contentText: {
     fontSize: 16,
