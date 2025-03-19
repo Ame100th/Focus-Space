@@ -1,66 +1,123 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { 
+  View, 
+  Text, 
+  StyleSheet, 
+  TouchableOpacity, 
+  Dimensions,
+  Image
+} from 'react-native';
 
-type WelcomeProps = {username: string, setUsername: (username: string) => void};
+const { width } = Dimensions.get('window');
 
-const Welcome:React.FC<WelcomeProps> = ({username}) => {
-    return (
-        <View style={styles.container}>
-            <Image style={styles.image}
-            source={require('../components/Focus-Space.png')}
+type WelcomeProps = {
+  username: string;
+  setUsername: (username: string) => void;
+};
+
+const Welcome: React.FC<WelcomeProps> = ({ username, setUsername }) => {
+  return (
+    <View style={styles.container}>
+        <Image source={require("../assets/Focus-Space3.png")}
+        style={{position: 'absolute', width: "100%", bottom: width * .9}} /> 
+        <Image source={require("../assets/Focus-Space4.png")}
+        style={{position: 'absolute', width: "100%", top: width * .9}} /> 
+      <View style={styles.topBar}>
+        
+        <TouchableOpacity >
+        <Image source={require("../assets/notifications.png")}
+        style={styles.notif}
+        />
+        </TouchableOpacity>
+        <TouchableOpacity>
+            <Image source={require("../assets/settings.png")}
+            style={styles.notif}
             />
-            <Text style={styles.title}>Welcome {username} to Focus Space!</Text>
-            <Text style={styles.subtitle}>
-                Stay focused, achieve your goals, and embrace productivity.
-            </Text>
-            <TouchableOpacity style={styles.button}>
-                <Text style={styles.buttonText}>Get Started</Text>
-            </TouchableOpacity>
-        </View>
-    );
+        </TouchableOpacity>
+      </View>
+
+      {/* Main Content Area */}
+      <View style={styles.mainContent}>
+        
+      </View>
+
+      {/* Bottom Navigation Bar */}
+      <View style={styles.topBar}>
+        <TouchableOpacity>
+        <Image source={require("../assets/home.png")}
+            style={styles.notif}
+            />
+        </TouchableOpacity>
+        <TouchableOpacity>
+        <Image source={require("../assets/calendar.png")}
+            style={styles.notif}
+            />
+        </TouchableOpacity>
+        <TouchableOpacity>
+        <Image source={require("../assets/account.png")}
+            style={styles.notif}
+            />
+        </TouchableOpacity>
+      </View>
+      
+    </View>
+  );
 };
 
 export default Welcome;
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#d8f5f8',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: 20,
-    },
-    image:{
-        width:200,
-        height: 200,
-        resizeMode: 'contain',
-        opacity: .8,
-        marginBottom: 50,
-    },
-    title: {
-        fontSize: 32,
-        fontWeight: '700',
-        color: '#333',
-        textAlign: 'center',
-        marginBottom: 30,
-    },
-    subtitle: {
-        fontSize: 18,
-        color: '#666',
-        textAlign: 'center',
-        marginBottom: 30,
-        lineHeight: 24,
-    },
-    button: {
-        backgroundColor: '#19a0ae',
-        paddingHorizontal: 30,
-        paddingVertical: 15,
-        borderRadius: 30,
-    },
-    buttonText: {
-        color: '#fff',
-        fontSize: 18,
-        fontWeight: '600',
-    },
-
+  container: {
+    flex: 1,
+    backgroundColor: '#d8f5f8',
+  },
+  // Top Navigation Bar
+  topBar: {
+    width: '100%',
+    height: 45,
+    backgroundColor: '#4A4E4F',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+  },
+  // Bottom Navigation Bar
+  bottomBar: {
+    width: '100%',
+    height: 60,
+    backgroundColor: '#4A4E4F',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  // Nav Items (e.g., placeholders for icons/text)
+  navItem: {
+    padding: 10,
+  },
+  navText: {
+    color: '#ffffff',
+    fontSize: 16,
+  },
+  title: {
+    color: '#ffffff',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  // Main Content
+  mainContent: {
+    flex: 1,
+    padding: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  contentText: {
+    fontSize: 16,
+    color: '#333',
+    textAlign: 'center',
+  },
+  notif: {
+    width: 33,
+    resizeMode: 'contain',
+    margin: 10
+  },
 });

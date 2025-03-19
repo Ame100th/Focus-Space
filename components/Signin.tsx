@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: width * 0.1,
     justifyContent: "center",
-    marginBottom: width * 0.3
+    marginBottom: width * 0.2
   },
   focuslogo: {
     width: "90%",
@@ -212,12 +212,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
 
-  googleborder:{
-    borderWidth: 2,
-    width: 200,
-    alignItems: 'center',
-    height: 'auto'
-  },
+
   signin: {
     color: "black",
     fontWeight: "bold",
