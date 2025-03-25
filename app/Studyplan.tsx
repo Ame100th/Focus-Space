@@ -8,23 +8,22 @@ import {
   Image
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Colors } from '../../Practice/constants/Colors';
 
 const { width } = Dimensions.get('window');
 
-type StudyMethodsProps = {
+type planProps = {
   username: string;
   setUsername: (username: string) => void;
 };
 
-const StudyMethods: React.FC<StudyMethodsProps> = ({ username, setUsername }) => {
+const plan: React.FC<planProps> = ({ username, setUsername }) => {
   const router = useRouter();
   return (
     <View style={styles.container}>
         <Image source={require("../assets/Focus-Space3.png")}
-        style={{position: 'absolute', width: "100%", bottom: width * 1.1}} /> 
+        style={{position: 'absolute', width: "100%", bottom: width * 1.3}} /> 
         <Image source={require("../assets/Focus-Space4.png")}
-        style={{position: 'absolute', width: "100%", top: width * 1.1}} /> 
+        style={{position: 'absolute', width: "100%", top: width * 1.3}} /> 
       <View style={styles.topBar}>
         
         <TouchableOpacity onPress={() => router.push("Welcome")}>
@@ -36,20 +35,8 @@ const StudyMethods: React.FC<StudyMethodsProps> = ({ username, setUsername }) =>
 
       {/* Main Content Area */}
       <View style={styles.mainContent}>
-        <TouchableOpacity onPress={() => router.push("ActiveRecall")}>
-        <Text style={styles.textmain}>Active Recall</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => router.push("Pomodoro")}>
-        <Text style={styles.textmain}>Pomodoro</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => router.push("SpaceRepetition")}>
-        <Text style={styles.textmain}>Space Repetition</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => router.push("Teach")}>
-        <Text style={styles.textmain}>Teach/Explain</Text>
-        </TouchableOpacity>
+        
       </View>
-      
 
       {/* Bottom Navigation Bar */}
       <View style={styles.topBar}>
@@ -74,13 +61,12 @@ const StudyMethods: React.FC<StudyMethodsProps> = ({ username, setUsername }) =>
   );
 };
 
-export default StudyMethods;
+export default plan;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#d8f5f8',
-    justifyContent: 'center',
   },
   // Top Navigation Bar
   topBar: {
@@ -117,26 +103,21 @@ const styles = StyleSheet.create({
   // Main Content
   mainContent: {
     flex: 1,
+    padding: 20,
     justifyContent: 'center',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    top: width * .5
+    alignItems: 'center',
+    bottom: width * 0.4,
   },
 
   textmain:{
     padding: 10,
-    margin: 15,
+    margin: 7,
     backgroundColor: '#30B0C7',
-    width: width * 0.3,
-    height: width * 0.3,
+    width: width * 0.5,
     textAlign: 'center',
     borderRadius: 7,
-    fontSize: 16,
-    fontWeight: '900',
-    justifyContent: 'center',
-    alignItems: 'center',
-    display: 'flex',
-    textAlignVertical: 'center',
+    fontSize: 15,
+    fontWeight: '900'
   },
   contentText: {
     fontSize: 16,

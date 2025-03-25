@@ -21,9 +21,9 @@ const Settings: React.FC<SettingsProps> = ({ username, setUsername }) => {
   return (
     <View style={styles.container}>
         <Image source={require("../assets/Focus-Space3.png")}
-        style={{position: 'absolute', width: "100%", bottom: width * .9}} /> 
+        style={{position: 'absolute', width: "100%", bottom: width * 1.3}} /> 
         <Image source={require("../assets/Focus-Space4.png")}
-        style={{position: 'absolute', width: "100%", top: width * .9}} /> 
+        style={{position: 'absolute', width: "100%", top: width * 1.3}} /> 
       <View style={styles.topBar}>
         
         <TouchableOpacity onPress={() => router.push("Welcome")}>
@@ -51,7 +51,7 @@ const Settings: React.FC<SettingsProps> = ({ username, setUsername }) => {
 
       {/* Bottom Navigation Bar */}
       <View style={styles.topBar}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => router.push("Welcome")}>
         <Image source={require("../assets/home.png")}
             style={styles.notif}
             />
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   notif: {
-    width: 33,
+    width: 30,
     resizeMode: 'contain',
     margin: 10
   },

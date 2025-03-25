@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, } from "react";
+import { useRouter } from "expo-router";
 import {
   View,
   Text,
@@ -9,7 +10,7 @@ import {
   Dimensions,
   SafeAreaView,
 } from "react-native";
-import credentials from "../credentials.json";
+import {getUser} from "../lib/supabase_crud";
 
 const { width } = Dimensions.get("window");
 
@@ -21,20 +22,43 @@ type SignProps = {
 
 const Signin: React.FC<SignProps> = ({ setIsSignedIn, username, setUsername }) => {
   const [password, setPassword] = useState<string>("");
+  const [userData, setuserData] = useState<any>(null);
+  const [email, setEmail] = useState<string>("");
+  const [loading, setloading] = useState<boolean>(true);
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getUser();
+        setuserData(data);
+      } catch (error) {
+        console.error("error fetching data", error);
+      } finally {
+        setloading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  
 
   const handleSignin = () => {
-    const lowername = username.toLowerCase().trim();
-    const user = credentials.users.find(
-      (user) =>
-        user.username.toLowerCase() === lowername && user.password === password.trim()
-    );
-
+      
+    const email_regex = /^[a-zA-Z0-9_.]+[@]{1}[a-zA-Z0-9_.]+\..{3}$/;
     const regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*\(\)+_\-=\[\]{};':"\\|,.<>\/?]).+$/;
-    if (lowername === "") {
-      alert("Username is Invalid");
+
+    if (email === "") {
+      alert("Email is Invalid");
       return;
-    } else if (lowername.length < 5) {
-      alert("Username must be above 5 characters.");
+    } else if (email.length < 5) {
+      alert("Email must be above 5 characters.");
+      return;
+    } else if (!email_regex.test(email)) {
+      alert("Email Field Must be an Email");
+      return;
+    } else if (userData && !userData.some((user: any) => user.email === email)) {
+      alert("No user by this email");
       return;
     }
 
@@ -45,10 +69,15 @@ const Signin: React.FC<SignProps> = ({ setIsSignedIn, username, setUsername }) =
       alert("Password must be at least 8 characters long.");
       return;
     } else if (!regex.test(password)) {
-      alert("Incorrect password");
+      alert("Password must contain a Capital letter, a Small letter, a number and special character");
       return;
     }
-    if (user) {
+      else if (userData && !userData.some((user: any) => user.password === password)){
+        alert("Incorrect password");
+        return
+      }
+    
+    if (userData) {
       setIsSignedIn(true);
     } else {
       alert("Invalid username or password.");
@@ -72,9 +101,9 @@ const Signin: React.FC<SignProps> = ({ setIsSignedIn, username, setUsername }) =
           />
           <TextInput
             style={styles.input}
-            placeholder="Username"
-            value={username}
-            onChangeText={setUsername}
+            placeholder="Email"
+            value={email}
+            onChangeText={setEmail}
           />
         </View>
         <View style={styles.textinputview}>
@@ -98,7 +127,7 @@ const Signin: React.FC<SignProps> = ({ setIsSignedIn, username, setUsername }) =
         </TouchableOpacity>
         <Text style={styles.orText}>Or sign in with</Text>
         <View>
-          <TouchableOpacity style={styles.googleborder}>
+          <TouchableOpacity>
             <Text style={styles.googletext}>
               <Text style={{ color: "#4285F4" }}>G</Text>
               <Text style={{ color: "#EA4335" }}>o</Text>
@@ -114,7 +143,7 @@ const Signin: React.FC<SignProps> = ({ setIsSignedIn, username, setUsername }) =
         </TouchableOpacity>
         <Text style={styles.signupview}>
           Don't have an account? Sign up{" "}
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => router.push("signup")}>
           <Text style={styles.signupLink}>Here</Text>
           </TouchableOpacity>
         </Text>
@@ -256,3 +285,7 @@ const styles = StyleSheet.create({
 });
 
 export default Signin;
+function fetchData() {
+  throw new Error("Function not implemented.");
+}
+

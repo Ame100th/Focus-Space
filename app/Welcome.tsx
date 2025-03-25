@@ -21,9 +21,9 @@ const Welcome: React.FC<WelcomeProps> = ({ username, setUsername }) => {
   return (
     <View style={styles.container}>
         <Image source={require("../assets/Focus-Space3.png")}
-        style={{position: 'absolute', width: "100%", bottom: width * .9}} /> 
+        style={{position: 'absolute', width: "100%", bottom: width * 1.2}} /> 
         <Image source={require("../assets/Focus-Space4.png")}
-        style={{position: 'absolute', width: "100%", top: width * .9}} /> 
+        style={{position: 'absolute', width: "100%", top: width * 1.2}} /> 
       <View style={styles.topBar}>
         
         <TouchableOpacity >
@@ -43,30 +43,30 @@ const Welcome: React.FC<WelcomeProps> = ({ username, setUsername }) => {
         <TouchableOpacity onPress={() => router.push("StudyMethods")}>
         <Text style={styles.textmain}>Study Methods</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => router.push("Studyplan")}>
         <Text style={styles.textmain}>Study Plan</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => router.push("Tasks&Notes")}>
         <Text style={styles.textmain}>Tasks & Notes</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => router.push("Progress")}>
         <Text style={styles.textmain}>Progress</Text>
         </TouchableOpacity>
       </View>
 
       {/* Bottom Navigation Bar */}
       <View style={styles.topBar}>
-        <TouchableOpacity>
+        <TouchableOpacity >
         <Image source={require("../assets/home.png")}
             style={styles.notif}
             />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => router.push("calender")}>
         <Image source={require("../assets/calendar.png")}
             style={styles.notif}
             />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => router.push("account")}>
         <Image source={require("../assets/account.png")}
             style={styles.notif}
             />
@@ -141,8 +141,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   notif: {
-    width: 33,
+    width: 30,
     resizeMode: 'contain',
     margin: 10
   },
+
 });
