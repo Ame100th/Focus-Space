@@ -175,6 +175,7 @@ const styles = StyleSheet.create({
   uspaicon: {
     width: 18,
     height: 18,
+    resizeMode: 'contain',
     position: "absolute",
     zIndex: 1,
     left: 10,

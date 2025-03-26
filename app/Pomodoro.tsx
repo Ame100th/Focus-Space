@@ -16,8 +16,9 @@ class Count extends React.Component<{ count: number, minutes: number }> {
 const Pomodoro = () => {
   const router = useRouter();
   const [isPlaying, setIsPlaying] = useState(false);
-  const [count, setCount] = useState<number>(10);
-  const [minutes, setMinutes] = useState(1)
+  const [count, setCount] = useState<number>(5);
+  const [minutes, setMinutes] = useState<number>(0);
+  const [isbreak, setIsbreak] = useState<boolean>(false);
 
   useEffect(() =>{
     if(!isPlaying) return;
@@ -29,8 +30,9 @@ const Pomodoro = () => {
         setMinutes(prevMinutes => prevMinutes - 1);
         return 59; // Reset seconds to 59 when a minute is deducted
         } else {
-        setIsPlaying(false); // Stop the timer when both minutes and count reach 0
         clearInterval(interval);
+        
+        setMinutes(5)
         return 0;
         }
       }
