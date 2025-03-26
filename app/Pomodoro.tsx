@@ -1,11 +1,27 @@
-import React from 'react';
-import { View, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, TouchableOpacity, Dimensions, Image, Text, Button } from 'react-native';
 import { useRouter } from 'expo-router';
 
 const { width } = Dimensions.get('window');
 
-const Pomodoro: React.FC = () => {
+const Pomodoro = () => {
   const router = useRouter();
+  const [count, setCount] = useState(5);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  useEffect(() =>{
+    if(!isPlaying) return;
+
+    const interval = setInterval(() => {
+      setCount(prevCount => prevCount - 1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [isPlaying]);
+
+  const handleplay = () => {
+    setIsPlaying(prevState => !prevState);
+  }
 
   return (
     <View style={styles.container}>
@@ -27,7 +43,10 @@ const Pomodoro: React.FC = () => {
       </View>
 
       {/* Main Content Area (currently empty) */}
-      <View style={styles.mainContent} />
+      <View style={styles.mainContent}>
+        <Text style={styles.count}>{count}</Text>
+      </View>
+      <Button title="play" onPress={handleplay}></Button>
 
       {/* Bottom Navigation Bar */}
       <View style={styles.topBar}>
@@ -75,5 +94,8 @@ const styles = StyleSheet.create({
     width: 33,
     resizeMode: 'contain',
     margin: 10,
+  },
+  count: {
+    fontSize: 60,
   },
 });
