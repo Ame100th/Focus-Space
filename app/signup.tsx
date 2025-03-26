@@ -79,7 +79,7 @@ const Signup: React.FC = () => {
         <Text style={styles.signtext}>Sign Up</Text>
         <View style={{ flexDirection: 'row', gap: width * 0.01 }}>
           <View style={styles.textinputviewname}>
-            <Image source={require("../assets/tabler_user.png")} style={styles.uspaicon} />
+            <Image source={require("../assets/name.png")} style={styles.uspaicon} />
             <TextInput
               style={styles.input}
               placeholder="First name"
@@ -88,7 +88,7 @@ const Signup: React.FC = () => {
             />
           </View>
           <View style={styles.textinputviewname}>
-            <Image source={require("../assets/tabler_user.png")} style={styles.uspaicon} />
+            <Image source={require("../assets/name.png")} style={styles.uspaicon} />
             <TextInput
               style={styles.input}
               placeholder="Last name"
@@ -172,6 +172,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     zIndex: 1,
     left: 10,
+    resizeMode: 'contain'
   },
   input: {
     backgroundColor: "white",

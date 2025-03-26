@@ -4,23 +4,59 @@ import { useRouter } from 'expo-router';
 
 const { width } = Dimensions.get('window');
 
+class Count extends React.Component<{ count: number, minutes: number }> {
+  render() {
+    return (
+      <Text style={styles.count}>{this.props.minutes}:{this.props.count}</Text>
+      
+    );
+  }
+}
+
 const Pomodoro = () => {
   const router = useRouter();
-  const [count, setCount] = useState(5);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [count, setCount] = useState<number>(10);
+  const [minutes, setMinutes] = useState(1)
 
   useEffect(() =>{
     if(!isPlaying) return;
 
     const interval = setInterval(() => {
-      setCount(prevCount => prevCount - 1);
+      setCount(prevCount => {
+      if (prevCount === 0) {
+        if (minutes > 0) {
+        setMinutes(prevMinutes => prevMinutes - 1);
+        return 59; // Reset seconds to 59 when a minute is deducted
+        } else {
+        setIsPlaying(false); // Stop the timer when both minutes and count reach 0
+        clearInterval(interval);
+        return 0;
+        }
+      }
+      return prevCount - 1;
+      });
     }, 1000);
 
     return () => clearInterval(interval);
   }, [isPlaying]);
 
+
   const handleplay = () => {
-    setIsPlaying(prevState => !prevState);
+    setIsPlaying(true);
+  }
+  const handelstop = () =>{
+    setIsPlaying(false)
+  }
+  const handle25 = () =>{
+    setCount(0)
+    setMinutes(25)
+    setIsPlaying(false);
+  }
+  const handle50 = () =>{
+    setCount(0)
+    setMinutes(50)
+    setIsPlaying(false);
   }
 
   return (
@@ -44,9 +80,24 @@ const Pomodoro = () => {
 
       {/* Main Content Area (currently empty) */}
       <View style={styles.mainContent}>
-        <Text style={styles.count}>{count}</Text>
+        <Count count={count} minutes={minutes} />
       </View>
-      <Button title="play" onPress={handleplay}></Button>
+      <View style={styles.timescontainer}>
+        <TouchableOpacity onPress={handle25}>
+          <Image style={styles.times} source={require("../assets/25.png")}/>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handle50}>
+          <Image style={styles.times} source={require("../assets/50.png")}/>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.playandstopbutton}>
+      <TouchableOpacity style={styles.playstop} onPress={handleplay}>
+        <Image style={styles.playstopimg} source={require("../assets/play.png")}/>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.playstop} onPress={handelstop}>
+        <Image style={styles.playstopimg} source={require("../assets/stop.png")}/>
+      </TouchableOpacity>
+      </View>
 
       {/* Bottom Navigation Bar */}
       <View style={styles.topBar}>
@@ -84,10 +135,11 @@ const styles = StyleSheet.create({
   // Main content area style
   mainContent: {
     flex: 1,
+    flexDirection: 'row',
     padding: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    bottom: width * 0.4,
+    bottom: width * 0.3,
   },
   // Style for navigation icons
   notif: {
@@ -96,6 +148,32 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   count: {
-    fontSize: 60,
+    fontSize: width * .4,
+    fontWeight: '900',
+    color: '#4A4E4F'
+  },
+  playstop:{
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    bottom: width * .1,
+  },
+  playstopimg:{
+    width:75,
+    resizeMode: 'contain',
+  },
+  playandstopbutton:{
+    flexDirection: 'row',
+    gap: "25%",
+    justifyContent: 'center'
+  },
+  timescontainer:{
+    flexDirection: 'row',
+    gap: "10%",
+    justifyContent: 'center',
+    bottom: width * 0.4
+  },
+  times:{
+    width: 60,
+    resizeMode: 'contain'
   },
 });
