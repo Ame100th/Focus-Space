@@ -7,7 +7,7 @@ const { width } = Dimensions.get('window');
 class Count extends React.Component<{ count: number, minutes: number }> {
   render() {
     return (
-      <Text style={styles.count}>{this.props.minutes}:{this.props.count}</Text>
+      <Text style={styles.count}>{this.props.minutes.toString().padStart(2,'0')}:{this.props.count}</Text>
       
     );
   }
@@ -31,7 +31,7 @@ const Pomodoro = () => {
         return 59; // Reset seconds to 59 when a minute is deducted
         } else {
         clearInterval(interval);
-        
+
         setMinutes(5)
         return 0;
         }
