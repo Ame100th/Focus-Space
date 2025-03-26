@@ -1,75 +1,59 @@
 import React from 'react';
-import { 
-  View, 
-  Text, 
-  StyleSheet, 
-  TouchableOpacity, 
-  Dimensions,
-  Image
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Colors } from '../../Practice/constants/Colors';
 
 const { width } = Dimensions.get('window');
 
-type StudyMethodsProps = {
-  username: string;
-  setUsername: (username: string) => void;
-};
-
-const StudyMethods: React.FC<StudyMethodsProps> = ({ username, setUsername }) => {
+const StudyMethods: React.FC = () => {
   const router = useRouter();
+  
   return (
     <View style={styles.container}>
-        <Image source={require("../assets/Focus-Space3.png")}
-        style={{position: 'absolute', width: "100%", bottom: width * 1.1}} /> 
-        <Image source={require("../assets/Focus-Space4.png")}
-        style={{position: 'absolute', width: "100%", top: width * 1.1}} /> 
+      {/* Background Images */}
+      <Image 
+        source={require("../assets/Focus-Space3.png")}
+        style={{ position: 'absolute', width: "100%", bottom: width * 1.1 }} 
+      /> 
+      <Image 
+        source={require("../assets/Focus-Space4.png")}
+        style={{ position: 'absolute', width: "100%", top: width * 1.1 }} 
+      /> 
+      
+      {/* Top Navigation Bar */}
       <View style={styles.topBar}>
-        
         <TouchableOpacity onPress={() => router.push("Welcome")}>
-        <Image source={require("../assets/back.png")}
-        style={styles.notif}
-        />
+          <Image source={require("../assets/back.png")} style={styles.notif} />
         </TouchableOpacity>
       </View>
 
       {/* Main Content Area */}
       <View style={styles.mainContent}>
         <TouchableOpacity onPress={() => router.push("ActiveRecall")}>
-        <Text style={styles.textmain}>Active Recall</Text>
+          <Text style={styles.textmain}>Active Recall</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => router.push("Pomodoro")}>
-        <Text style={styles.textmain}>Pomodoro</Text>
+          <Text style={styles.textmain}>Pomodoro</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => router.push("SpaceRepetition")}>
-        <Text style={styles.textmain}>Space Repetition</Text>
+          <Text style={styles.textmain}>Space Repetition</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => router.push("Teach")}>
-        <Text style={styles.textmain}>Teach/Explain</Text>
+          <Text style={styles.textmain}>Teach/Explain</Text>
         </TouchableOpacity>
       </View>
       
-
       {/* Bottom Navigation Bar */}
       <View style={styles.topBar}>
         <TouchableOpacity onPress={() => router.push("Welcome")}>
-        <Image source={require("../assets/home.png")}
-            style={styles.notif}
-            />
+          <Image source={require("../assets/home.png")} style={styles.notif} />
         </TouchableOpacity>
         <TouchableOpacity>
-        <Image source={require("../assets/calendar.png")}
-            style={styles.notif}
-            />
+          <Image source={require("../assets/calendar.png")} style={styles.notif} />
         </TouchableOpacity>
         <TouchableOpacity>
-        <Image source={require("../assets/account.png")}
-            style={styles.notif}
-            />
+          <Image source={require("../assets/account.png")} style={styles.notif} />
         </TouchableOpacity>
       </View>
-      
     </View>
   );
 };
@@ -82,7 +66,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#d8f5f8',
     justifyContent: 'center',
   },
-  // Top Navigation Bar
+  // Navigation Bar style (used for both top and bottom)
   topBar: {
     width: '100%',
     height: 45,
@@ -92,38 +76,16 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 10,
   },
-  // Bottom Navigation Bar
-  bottomBar: {
-    width: '100%',
-    height: 60,
-    backgroundColor: '#4A4E4F',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  // Nav Items (e.g., placeholders for icons/text)
-  navItem: {
-    padding: 10,
-  },
-  navText: {
-    color: '#ffffff',
-    fontSize: 16,
-  },
-  title: {
-    color: '#ffffff',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  // Main Content
+  // Main Content area style
   mainContent: {
     flex: 1,
     justifyContent: 'center',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    top: width * .5
+    top: width * 0.5,
   },
-
-  textmain:{
+  // Style for grid buttons in main content
+  textmain: {
     padding: 10,
     margin: 15,
     backgroundColor: '#30B0C7',
@@ -138,14 +100,10 @@ const styles = StyleSheet.create({
     display: 'flex',
     textAlignVertical: 'center',
   },
-  contentText: {
-    fontSize: 16,
-    color: '#333',
-    textAlign: 'center',
-  },
+  // Navigation icon style
   notif: {
     width: 30,
     resizeMode: 'contain',
-    margin: 10
+    margin: 10,
   },
 });

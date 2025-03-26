@@ -9,7 +9,7 @@ export async function getUser(){
     return data;
 }
 
-export async function createuser(item: {username: string, password: string}){
+export async function createuser(item: {firstname: string, lastname: string, email: string, password: string}){
     let {data, error} = await supabase.from(TABLE_NAME).insert(item)
     if(error){
         throw new Error(error.message)

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
 import {
   View,
@@ -10,7 +10,7 @@ import {
   Dimensions,
   SafeAreaView,
 } from "react-native";
-import {getUser} from "../lib/supabase_crud";
+import { getUser } from "../lib/supabase_crud";
 
 const { width } = Dimensions.get("window");
 
@@ -20,41 +20,36 @@ type SignProps = {
   setUsername: (username: string) => void;
 };
 
-const Signin: React.FC<SignProps> = ({ setIsSignedIn, username, setUsername }) => {
+const Signin: React.FC<SignProps> = ({ setIsSignedIn, setUsername }) => {
   const [password, setPassword] = useState<string>("");
-  const [userData, setuserData] = useState<any>(null);
+  const [userData, setUserData] = useState<any>(null);
   const [email, setEmail] = useState<string>("");
-  const [loading, setloading] = useState<boolean>(true);
   const router = useRouter();
 
+  // Fetch user data on component mount
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchUserData = async () => {
       try {
         const data = await getUser();
-        setuserData(data);
+        setUserData(data);
       } catch (error) {
-        console.error("error fetching data", error);
-      } finally {
-        setloading(false);
+        console.error("Error fetching user data", error);
       }
     };
-    fetchData();
+    fetchUserData();
   }, []);
 
-  
-
+  // Handles sign in by validating email and password, then routing if successful
   const handleSignin = () => {
-      
-    const email_regex = /^[a-zA-Z0-9_.]+[@]{1}[a-zA-Z0-9_.]+\..{3}$/;
-    const regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*\(\)+_\-=\[\]{};':"\\|,.<>\/?]).+$/;
+    // Regular expressions for email and password validation
+    const emailRegex = /^[a-zA-Z0-9_.]+[@]{1}[a-zA-Z0-9_.]+\..{3}$/;
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*\(\)+_\-=\[\]{};':"\\|,.<>\/?]).+$/;
 
+    // Validate email field
     if (email === "") {
       alert("Email is Invalid");
       return;
-    } else if (email.length < 5) {
-      alert("Email must be above 5 characters.");
-      return;
-    } else if (!email_regex.test(email)) {
+    } else if (!emailRegex.test(email)) {
       alert("Email Field Must be an Email");
       return;
     } else if (userData && !userData.some((user: any) => user.email === email)) {
@@ -62,43 +57,38 @@ const Signin: React.FC<SignProps> = ({ setIsSignedIn, username, setUsername }) =
       return;
     }
 
+    // Validate password field
     if (password === "") {
       alert("Password is required.");
       return;
     } else if (password.length < 8) {
       alert("Password must be at least 8 characters long.");
       return;
-    } else if (!regex.test(password)) {
-      alert("Password must contain a Capital letter, a Small letter, a number and special character");
+    } else if (!passwordRegex.test(password)) {
+      alert("Password must contain a capital letter, a small letter, a number, and a special character");
+      return;
+    } else if (userData && !userData.some((user: any) => user.password === password)) {
+      alert("Incorrect password");
       return;
     }
-      else if (userData && !userData.some((user: any) => user.password === password)){
-        alert("Incorrect password");
-        return
-      }
     
+    // If validations pass, navigate to Welcome screen and update sign in state
     if (userData) {
+      router.push({ pathname: "Welcome", params: { email } });
       setIsSignedIn(true);
     } else {
       alert("Invalid username or password.");
-      return;
     }
   };
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        <Image
-          source={require("../assets/Component2.png")}
-          style={styles.focuslogo}
-        />
+        <Image source={require("../assets/Component2.png")} style={styles.focuslogo} />
 
         <Text style={styles.signtext}>Sign Into Your Account</Text>
         <View style={styles.textinputview}>
-          <Image
-            source={require("../assets/tabler_user.png")}
-            style={styles.uspaicon}
-          />
+          <Image source={require("../assets/tabler_user.png")} style={styles.uspaicon} />
           <TextInput
             style={styles.input}
             placeholder="Email"
@@ -107,10 +97,7 @@ const Signin: React.FC<SignProps> = ({ setIsSignedIn, username, setUsername }) =
           />
         </View>
         <View style={styles.textinputview}>
-          <Image
-            source={require("../assets/arcticons_password.png")}
-            style={styles.uspaicon}
-          />
+          <Image source={require("../assets/arcticons_password.png")} style={styles.uspaicon} />
           <TextInput
             style={styles.input}
             placeholder="Password"
@@ -144,10 +131,9 @@ const Signin: React.FC<SignProps> = ({ setIsSignedIn, username, setUsername }) =
         <Text style={styles.signupview}>
           Don't have an account? Sign up{" "}
           <TouchableOpacity onPress={() => router.push("signup")}>
-          <Text style={styles.signupLink}>Here</Text>
+            <Text style={styles.signupLink}>Here</Text>
           </TouchableOpacity>
         </Text>
-       
       </View>
     </SafeAreaView>
   );
@@ -163,7 +149,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: width * 0.1,
     justifyContent: "center",
-    marginBottom: width * 0.2
+    marginBottom: width * 0.2,
   },
   focuslogo: {
     width: "90%",
@@ -212,34 +198,13 @@ const styles = StyleSheet.create({
     borderColor: "black",
     borderWidth: 0.5,
   },
-
-  googleimage:{
-      width: 27,
-      height: 27,
-      position: 'absolute',
-      zIndex: 1,
-      left: 120,
-      top: 22,
-  },
-  // googlebutton:{
-  //   borderRadius: 25,
-  //   width: 100,
-  //   alignItems: 'center',
-  //   padding: 12,
-  //   borderColor: "black",
-  //   borderWidth: .5,
-  //   marginBottom: 55,
-  //   marginTop: 15,
-  // },
-  googletext:{
-    fontWeight: 'bold',
+  googletext: {
+    fontWeight: "bold",
     marginBottom: 55,
     marginTop: 5,
-    fontSize:30,
+    fontSize: 30,
     borderRadius: 100,
   },
-
-
   signin: {
     color: "black",
     fontWeight: "bold",
@@ -254,38 +219,14 @@ const styles = StyleSheet.create({
     marginTop: 35,
     fontSize: 15,
   },
-  googlelogobutton: {
-    alignItems: "center",
-    
-  },
-  viewgoogle: {
-    width: 120,
-    height: 120,
-    resizeMode: "contain",
-  },
- 
   signupLink: {
     color: "#19a0ae",
     textDecorationLine: "underline",
     fontWeight: "bold",
   },
-  contactcontainer:{
-    flexDirection: 'row',
-    verticalAlign: 'middle'
-    
-  },
-  contactText: {
-    fontWeight: "bold",
-    color: '#19a0ae',
-    textDecorationLine: "underline",
-  },
-  signupview:{
+  signupview: {
     margin: 20,
   },
 });
 
 export default Signin;
-function fetchData() {
-  throw new Error("Function not implemented.");
-}
-
