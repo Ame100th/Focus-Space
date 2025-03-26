@@ -7,8 +7,7 @@ const { width } = Dimensions.get('window');
 class Count extends React.Component<{ count: number, minutes: number }> {
   render() {
     return (
-      <Text style={styles.count}>{this.props.minutes.toString().padStart(2,'0')}:{this.props.count}</Text>
-      
+      <Text style={styles.count}>{this.props.minutes.toString().padStart(2,'0')}:{this.props.count.toString().padStart(2,'0')}</Text>
     );
   }
 }
@@ -16,9 +15,11 @@ class Count extends React.Component<{ count: number, minutes: number }> {
 const Pomodoro = () => {
   const router = useRouter();
   const [isPlaying, setIsPlaying] = useState(false);
-  const [count, setCount] = useState<number>(5);
-  const [minutes, setMinutes] = useState<number>(0);
+  const [count, setCount] = useState<number>(0);
+  const [minutes, setMinutes] = useState<number>(25);
   const [isbreak, setIsbreak] = useState<boolean>(false);
+  const [sessionTime, setSessionTime] = useState<number>(0);
+
 
   useEffect(() =>{
     if(!isPlaying) return;
@@ -30,10 +31,24 @@ const Pomodoro = () => {
         setMinutes(prevMinutes => prevMinutes - 1);
         return 59; // Reset seconds to 59 when a minute is deducted
         } else {
-        clearInterval(interval);
+            if(!isbreak){
+              const breakDuration = sessionTime === 25 ? 5: (sessionTime === 50 ? 10 : 1);  
+              if(breakDuration > 0){
+              setMinutes(breakDuration);
+              setIsbreak(true);
+              return 0
+            }else{
+              setIsPlaying(false);
+              clearInterval(interval);
+              return 0;
+            }
+            } 
+            else{
+              setMinutes(sessionTime);
+              setIsbreak(false);
 
-        setMinutes(5)
-        return 0;
+              return 0;
+            }
         }
       }
       return prevCount - 1;
@@ -41,7 +56,7 @@ const Pomodoro = () => {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [isPlaying]);
+  }, [isPlaying, minutes, count, isbreak, sessionTime]);
 
 
   const handleplay = () => {
@@ -51,14 +66,18 @@ const Pomodoro = () => {
     setIsPlaying(false)
   }
   const handle25 = () =>{
-    setCount(0)
-    setMinutes(25)
+    setCount(0);
+    setMinutes(25);
     setIsPlaying(false);
+    setSessionTime(25);
+    setIsbreak(false)
   }
   const handle50 = () =>{
-    setCount(0)
-    setMinutes(50)
+    setCount(0);
+    setMinutes(50);
     setIsPlaying(false);
+    setSessionTime(50);
+    setIsbreak(false);
   }
 
   return (
