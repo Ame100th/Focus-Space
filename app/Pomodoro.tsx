@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, TouchableOpacity, Dimensions, Image, Text, Button } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Dimensions, Image, Text } from 'react-native';
 import { useRouter } from 'expo-router';
 
 const { width } = Dimensions.get('window');
@@ -32,7 +32,7 @@ const Pomodoro = () => {
         return 59; // Reset seconds to 59 when a minute is deducted
         } else {
             if(!isbreak){
-              const breakDuration = sessionTime === 25 ? 5: (sessionTime === 50 ? 10 : 1);  
+              const breakDuration = sessionTime === 25 ? 5: (sessionTime === 50 ? 10 : 5);  
               if(breakDuration > 0){
               setMinutes(breakDuration);
               setIsbreak(true);
