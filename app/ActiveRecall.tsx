@@ -1,16 +1,16 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { View, StyleSheet, TouchableOpacity, Dimensions, Image, Text, ActivityIndicator, ScrollView, TextInput, Button, } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet, TouchableOpacity, Dimensions, Image, Alert, Text, ActivityIndicator, ScrollView, TextInput, Button, } from 'react-native';
 import { useRouter } from 'expo-router';
-import {GoogleGenerativeAI,} from '@google/generative-ai';
 import {useFonts} from 'expo-font';
 
 const { width } = Dimensions.get('window');
-const API_KEY = '';
+const LAMBDA_ENDPOINT_URL = 'https://ih1rkg927b.execute-api.us-east-2.amazonaws.com/myAppGenerateQuestionsFunction';
 const MODEL_NAME = 'gemini-2.0-flash';
 
 const ActiveRecall: React.FC = () => {
   const router = useRouter();
-  const [prompt, setPrompt] = useState<string>();
+  const [prompt, setPrompt] = useState<string>("");
+  const [questionCount, setQuestion] = useState<string>("");
   const [response, setResponse] = useState<string | null>(null)
   const [loading, setisLoading] = useState<boolean>(false);
   const [error, setisError] = useState<string | null>(null);
@@ -19,18 +19,58 @@ const ActiveRecall: React.FC = () => {
     });
 
   const handleApiCall = async () => {
+
+    const topic = prompt.trim();
+    if(!topic){
+      setisError("Please Enter a topic")
+      Alert.alert("Missing Input", "Please enter a topic for the question.")
+      return
+    }
+    if(!questionCount){
+      setisError("Please Enter the question amount")
+      Alert.alert("Missing Input", "Please Enter the question amount.")
+      return
+    }
+
     setisLoading(true);
     setisError(null);
     setResponse(null);
   
   try {
-    const genAI = new GoogleGenerativeAI(API_KEY);
-    const model = genAI.getGenerativeModel({model: MODEL_NAME});
+    const requestBody = JSON.stringify({
+      prompt: topic,
+      questionCount: questionCount
+    });
 
-    const result = await model.generateContent(`Randomly generate 10 questions ranging from easy to hard about ${prompt}(don't include anything except the questions and add an extra space after every question)`);
-    const response = result.response;
-    const text = response.text();
-    setResponse(text);
+    const lambdaResponse = await fetch(LAMBDA_ENDPOINT_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+
+      }, 
+      body: requestBody,
+    });
+
+    if(!lambdaResponse.ok){
+      let errorBody = await lambdaResponse.text();
+      try{
+        const errorJson = JSON.parse(errorBody);
+        errorBody = errorJson.message || errorJson.error || JSON.stringify(errorJson);
+
+      } catch(parseError){
+        console.log("Lambda error", errorBody);
+
+      }
+      throw new Error(`backend error: ${lambdaResponse.status} - ${errorBody}`);
+    }
+
+    const responseData = await lambdaResponse.json();
+    if(responseData && responseData.questions){
+      setResponse(responseData.questions)
+    }else {
+      console.warn("Lambda response format unexpected:", responseData);
+        throw new Error("Received an unexpected response format from the backend.");
+    }
 
   } catch (error: any){
     setisError(error.message);
@@ -41,7 +81,6 @@ const ActiveRecall: React.FC = () => {
   
   return (
     <View style={styles.container}>
-      {/* Background Images with absolute positioning */}
       
       {/* Top Navigation Bar */}
       <View style={styles.topBar}>
@@ -51,7 +90,8 @@ const ActiveRecall: React.FC = () => {
       </View>
       <View style={styles.mainContent}>
         <Text style={{fontFamily: 'DynaPuff', fontSize: 15}}>This feature generates 10 questions for you, input the topic and you'll see questions ranging from easy to hard.</Text>
-      <TextInput style={{borderWidth: .5, borderRadius: 5}} value={prompt} onChangeText={setPrompt} placeholder='What subject do you want questions for? ' multiline/>
+      <TextInput style={styles.textinput} value={prompt} onChangeText={setPrompt} placeholder='What subject do you want questions for? ' multiline/>
+      <TextInput style={styles.textinput} value={questionCount} onChangeText={setQuestion} placeholder='How many questions would you like? '/>
       {loading && <ActivityIndicator size='large' color="#30B0C7"/>}
       <TouchableOpacity style={{padding: 10, backgroundColor: '#30B0C7', borderRadius: 5}} onPress={(handleApiCall)} disabled={loading} >
         <Text style={{color: 'white'}}>Generate</Text>
@@ -62,8 +102,6 @@ const ActiveRecall: React.FC = () => {
         </ScrollView>
       )}
       </View>
-      
-      {/* Main Content Area (currently empty) */}
      
 
       {/* Bottom Navigation Bar */}
@@ -112,5 +150,11 @@ const styles = StyleSheet.create({
     width: 33,
     resizeMode: 'contain',
     margin: 10,
+  },
+  textinput:{
+    borderWidth: .5,
+    borderRadius: 5,
+    width: width * .6,
+    textAlign: 'center'
   },
 });
