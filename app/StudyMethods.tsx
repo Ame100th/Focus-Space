@@ -1,11 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native';
 import { useRouter } from 'expo-router';
+import {useFonts} from 'expo-font';
 
 const { width } = Dimensions.get('window');
 
 const StudyMethods: React.FC = () => {
   const router = useRouter();
+   const [fontsLoaded, fontError] = useFonts({
+      'DynaPuff': require('../assets/fonts/DynaPuff-VariableFont_wdth,wght.ttf')
+    });
   
   return (
     <View style={styles.container}>
@@ -15,13 +19,17 @@ const StudyMethods: React.FC = () => {
         style={{ position: 'absolute', width: "100%", bottom: width * 1.1 }} 
       /> 
       <Image 
+              source={require("../assets/Focus-Spacemoonpng.png")}
+              style={{ position: 'absolute', width: "100%", bottom: width * .1, resizeMode: 'contain'}} 
+            /> 
+      <Image 
         source={require("../assets/Focus-Space4.png")}
         style={{ position: 'absolute', width: "100%", top: width * 1.1 }} 
       /> 
       
       {/* Top Navigation Bar */}
       <View style={styles.topBar}>
-        <TouchableOpacity onPress={() => router.push("Welcome")}>
+        <TouchableOpacity onPress={() => router.back()}>
           <Image source={require("../assets/back.png")} style={styles.notif} />
         </TouchableOpacity>
       </View>
@@ -92,13 +100,13 @@ const styles = StyleSheet.create({
     width: width * 0.3,
     height: width * 0.3,
     textAlign: 'center',
-    borderRadius: 7,
+    borderRadius: 10,
     fontSize: 16,
-    fontWeight: '900',
     justifyContent: 'center',
     alignItems: 'center',
     display: 'flex',
     textAlignVertical: 'center',
+    fontFamily: 'DynaPuff'
   },
   // Navigation icon style
   notif: {

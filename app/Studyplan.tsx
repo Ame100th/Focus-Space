@@ -21,7 +21,7 @@ const Studyplan: React.FC = () => {
 
       {/* Top Navigation Bar */}
       <View style={styles.topBar}>
-        <TouchableOpacity onPress={() => router.push("Welcome")}>
+        <TouchableOpacity onPress={() => router.back()}>
           <Image source={require("../assets/back.png")} style={styles.notif} />
         </TouchableOpacity>
       </View>

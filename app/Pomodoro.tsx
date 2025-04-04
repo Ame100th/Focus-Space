@@ -94,7 +94,7 @@ const Pomodoro = () => {
 
       {/* Top Navigation Bar */}
       <View style={styles.topBar}>
-        <TouchableOpacity onPress={() => router.push("StudyMethods")}>
+        <TouchableOpacity onPress={() => router.back()}>
           <Image source={require("../assets/back.png")} style={styles.notif} />
         </TouchableOpacity>
       </View>
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   count: {
-    fontSize: width * .4,
+    fontSize: width * .3,
     fontWeight: '900',
     color: '#4A4E4F'
   },

@@ -1,11 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native';
 import { useRouter } from 'expo-router';
+import {useFonts} from 'expo-font';
 
 const { width } = Dimensions.get('window');
 
 const Settings: React.FC = () => {
   const router = useRouter();
+   useFonts({
+      'DynaPuff': require('../assets/fonts/DynaPuff-VariableFont_wdth,wght.ttf')
+    });
   
   return (
     <View style={styles.container}>
@@ -21,7 +25,7 @@ const Settings: React.FC = () => {
       
       {/* Top Navigation Bar */}
       <View style={styles.topBar}>
-        <TouchableOpacity onPress={() => router.push("Welcome")}>
+        <TouchableOpacity onPress={() => router.back()}>
           <Image source={require("../assets/back.png")} style={styles.notif} />
         </TouchableOpacity>
       </View>
@@ -87,12 +91,13 @@ const styles = StyleSheet.create({
   textmain: {
     padding: 10,
     margin: 7,
-    backgroundColor: '#30B0C7',
+    // backgroundColor: '#30B0C7',
+    backgroundColor: 'gray',
     width: width * 0.5,
     textAlign: 'center',
-    borderRadius: 7,
+    borderRadius: 10,
     fontSize: 15,
-    fontWeight: '900',
+    fontFamily: 'DynaPuff',
   },
   // Navigation icon style
   notif: {

@@ -41,7 +41,7 @@ const Account: React.FC = () => {
         <TouchableOpacity onPress={() => router.push("Welcome")}>
           <Image source={require("../assets/home.png")} style={styles.notif} />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => router.push("calender")}>
           <Image source={require("../assets/calendar.png")} style={styles.notif} />
         </TouchableOpacity>
         <TouchableOpacity>

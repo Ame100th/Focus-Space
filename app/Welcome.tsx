@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { getUser } from "../lib/supabase_crud";
+import {useFonts} from 'expo-font';
 
 const { width } = Dimensions.get('window');
 
@@ -14,6 +15,9 @@ const Welcome: React.FC<WelcomeProps> = () => {
   const { email } = useLocalSearchParams();
   const [userData, setUserData] = useState<any>(null);
   const router = useRouter();
+   useFonts({
+    'DynaPuff': require('../assets/fonts/DynaPuff-VariableFont_wdth,wght.ttf')
+  });
 
   // Fetch user data on component mount
   useEffect(() => {
@@ -33,11 +37,15 @@ const Welcome: React.FC<WelcomeProps> = () => {
       {/* Background Images */}
       <Image 
         source={require("../assets/Focus-Space3.png")}
-        style={{ position: 'absolute', width: "100%", bottom: width * 1.2 }} 
+        style={{ position: 'absolute', width: "100%", bottom: width * 0.9 }} 
+      /> 
+      <Image 
+        source={require("../assets/Focus-Spacemoonpng.png")}
+        style={{ position: 'absolute', width: "100%", bottom: width * .1, resizeMode: 'contain'}} 
       /> 
       <Image 
         source={require("../assets/Focus-Space4.png")}
-        style={{ position: 'absolute', width: "100%", top: width * 1.2 }} 
+        style={{ position: 'absolute', width: "100%", top: width * 0.9 }} 
       /> 
       
       {/* Top Navigation Bar */}
@@ -53,7 +61,7 @@ const Welcome: React.FC<WelcomeProps> = () => {
       {/* Main Content Area */}
       <View style={styles.mainContent}>
         {userData && userData.some((user: any) => user.email === email) && (
-          <Text>
+          <Text style={styles.welcometext}>
             Welcome {userData.find((user: any) => user.email === email).firstname}{" "}
             {userData.find((user: any) => user.email === email).lastname}
           </Text>
@@ -105,6 +113,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 10,
   },
+  welcometext:{
+    fontSize: 25,
+    bottom: width * 0.2,
+    fontFamily: 'DynaPuff',
+  },
   // Main Content area style
   mainContent: {
     flex: 1,
@@ -119,9 +132,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#30B0C7',
     width: width * 0.7,
     textAlign: 'center',
-    borderRadius: 7,
+    borderRadius: 10,
     fontSize: 15,
-    fontWeight: '900',
+    fontFamily: 'DynaPuff'
   },
   // Navigation icon style
   notif: {

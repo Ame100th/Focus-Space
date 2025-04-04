@@ -6,7 +6,12 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "plugins": [["expo-router"]],
+    "plugins": [
+      [
+        "expo-router"
+      ],
+      "expo-font"
+    ],
     "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash-icon.png",

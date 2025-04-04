@@ -125,7 +125,7 @@ const Signin: React.FC<SignProps> = ({ setIsSignedIn, setUsername }) => {
             </Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => router.push("Welcome")}>
           <Text style={styles.signupLink}> Continue as a guest</Text>
         </TouchableOpacity>
         <Text style={styles.signupview}>

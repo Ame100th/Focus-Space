@@ -7,6 +7,7 @@ const App = () => {
   // State to determine if the user is signed in and manage the username.
   const [isSignedIn, setIsSignedIn] = useState<boolean>(true);
   const [username, setUsername] = useState<string>("");
+  
 
   return (
     <View style={styles.container}>
