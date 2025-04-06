@@ -122,13 +122,13 @@ const Pomodoro = () => {
 
       {/* Bottom Navigation Bar */}
       <View style={styles.topBar}>
-        <TouchableOpacity onPress={() => router.push("Welcome")}>
+        <TouchableOpacity onPress={() => router.push("StudyMethods")}>
           <Image source={require("../assets/home.png")} style={styles.notif} />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => router.push("calender")}>
           <Image source={require("../assets/calendar.png")} style={styles.notif} />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => router.push("account")}>
           <Image source={require("../assets/account.png")} style={styles.notif} />
         </TouchableOpacity>
       </View>

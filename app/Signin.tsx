@@ -11,6 +11,7 @@ import {
   SafeAreaView,
 } from "react-native";
 import { getUser } from "../lib/supabase_crud";
+import { signIn, signUp, signOut } from "../lib/supabase_auth";
 
 const { width } = Dimensions.get("window");
 
@@ -27,21 +28,12 @@ const Signin: React.FC<SignProps> = ({ setIsSignedIn, setUsername }) => {
   const router = useRouter();
 
   // Fetch user data on component mount
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const data = await getUser();
-        setUserData(data);
-      } catch (error) {
-        console.error("Error fetching user data", error);
-      }
-    };
-    fetchUserData();
-  }, []);
+  // 
+  
 
   // Handles sign in by validating email and password, then routing if successful
-  const handleSignin = () => {
-    // Regular expressions for email and password validation
+  const handleSignin = async () => {
+    
     const emailRegex = /^[a-zA-Z0-9_.]+[@]{1}[a-zA-Z0-9_.]+\..{3}$/;
     const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*\(\)+_\-=\[\]{};':"\\|,.<>\/?]).+$/;
 
@@ -71,14 +63,18 @@ const Signin: React.FC<SignProps> = ({ setIsSignedIn, setUsername }) => {
       alert("Incorrect password");
       return;
     }
-    
-    // If validations pass, navigate to Welcome screen and update sign in state
-    if (userData) {
-      router.push({ pathname: "Welcome", params: { email } });
-      setIsSignedIn(true);
-    } else {
-      alert("Invalid username or password.");
-    }
+
+     signIn(email, password)
+      .then(() => {
+        router.push({ pathname: "/StudyMethods", params: { email } });
+        setIsSignedIn(true);
+        console.log("User signed in successfully");
+      })
+      .catch((error) => {
+        console.error("Error signing in:", error);
+      }
+      );
+  
   };
 
   return (
@@ -125,7 +121,7 @@ const Signin: React.FC<SignProps> = ({ setIsSignedIn, setUsername }) => {
             </Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={() => router.push("Welcome")}>
+        <TouchableOpacity onPress={() => router.push("StudyMethods")}>
           <Text style={styles.signupLink}> Continue as a guest</Text>
         </TouchableOpacity>
         <Text style={styles.signupview}>

@@ -5,7 +5,7 @@ import {useFonts} from 'expo-font';
 
 const { width } = Dimensions.get('window');
 const LAMBDA_ENDPOINT_URL = 'https://ih1rkg927b.execute-api.us-east-2.amazonaws.com/myAppGenerateQuestionsFunction';
-const MODEL_NAME = 'gemini-2.0-flash';
+const MODEL_NAME = 'gemini-2.5-pro-preview-03-25';
 
 const ActiveRecall: React.FC = () => {
   const router = useRouter();
@@ -89,7 +89,7 @@ const ActiveRecall: React.FC = () => {
         </TouchableOpacity>
       </View>
       <View style={styles.mainContent}>
-        <Text style={{fontFamily: 'DynaPuff', fontSize: 15}}>This feature generates 10 questions for you, input the topic and you'll see questions ranging from easy to hard.</Text>
+        <Text style={{fontFamily: 'DynaPuff', fontSize: 15}}>This feature generates questions for you, input the topic and number of questions, it'll provide you with questions ranging from easy to hard.</Text>
       <TextInput style={styles.textinput} value={prompt} onChangeText={setPrompt} placeholder='What subject do you want questions for? ' multiline/>
       <TextInput style={styles.textinput} value={questionCount} onChangeText={setQuestion} placeholder='How many questions would you like? '/>
       {loading && <ActivityIndicator size='large' color="#30B0C7"/>}
@@ -106,13 +106,13 @@ const ActiveRecall: React.FC = () => {
 
       {/* Bottom Navigation Bar */}
       <View style={styles.topBar}>
-        <TouchableOpacity onPress={() => router.push("Welcome")}>
+        <TouchableOpacity onPress={() => router.push("StudyMethods")}>
           <Image source={require("../assets/home.png")} style={styles.notif} />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => router.push("calender")}>
           <Image source={require("../assets/calendar.png")} style={styles.notif} />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => router.push("account")}>
           <Image source={require("../assets/account.png")} style={styles.notif} />
         </TouchableOpacity>
       </View>

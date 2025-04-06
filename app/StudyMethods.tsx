@@ -30,7 +30,7 @@ const StudyMethods: React.FC = () => {
       {/* Top Navigation Bar */}
       <View style={styles.topBar}>
         <TouchableOpacity onPress={() => router.back()}>
-          <Image source={require("../assets/back.png")} style={styles.notif} />
+          {/* <Image source={require("../assets/back.png")} style={styles.notif} /> */}
         </TouchableOpacity>
       </View>
 
@@ -45,20 +45,20 @@ const StudyMethods: React.FC = () => {
         <TouchableOpacity onPress={() => router.push("SpaceRepetition")}>
           <Text style={styles.textmain}>Space Repetition</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => router.push("Teach")}>
-          <Text style={styles.textmain}>Teach/Explain</Text>
+        <TouchableOpacity>
+          <Text style={styles.textmain1}>Teach/Explain</Text>
         </TouchableOpacity>
       </View>
       
       {/* Bottom Navigation Bar */}
       <View style={styles.topBar}>
-        <TouchableOpacity onPress={() => router.push("Welcome")}>
+        <TouchableOpacity onPress={() => router.push("StudyMethods")}>
           <Image source={require("../assets/home.png")} style={styles.notif} />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => router.push("calender")}>
           <Image source={require("../assets/calendar.png")} style={styles.notif} />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => router.push("account")}>
           <Image source={require("../assets/account.png")} style={styles.notif} />
         </TouchableOpacity>
       </View>
@@ -97,6 +97,21 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 15,
     backgroundColor: '#30B0C7',
+    width: width * 0.3,
+    height: width * 0.3,
+    textAlign: 'center',
+    borderRadius: 10,
+    fontSize: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+    display: 'flex',
+    textAlignVertical: 'center',
+    fontFamily: 'DynaPuff'
+  },
+  textmain1: {
+    padding: 10,
+    margin: 15,
+    backgroundColor: 'gray',
     width: width * 0.3,
     height: width * 0.3,
     textAlign: 'center',

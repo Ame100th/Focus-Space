@@ -1,11 +1,17 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native';
 import { useRouter } from 'expo-router';
+import { signOut } from "../lib/supabase_auth"; // Assuming this is the correct path to your signOut function
 
 const { width } = Dimensions.get('window');
 
 const Account: React.FC = () => {
   const router = useRouter();
+  const handleSignOut = async () => {
+    await signOut();
+    router.push("Signin");
+    console.log("User signed out successfully");
+  };
   
   return (
     <View style={styles.container}>
@@ -22,7 +28,9 @@ const Account: React.FC = () => {
       {/* Top Navigation Bar */}
       <View style={styles.topBar}>
         <TouchableOpacity>
-          {/* Placeholder for potential additional action */}
+          <TouchableOpacity onPress={() => router.back()}>
+                    <Image source={require("../assets/back.png")} style={styles.notif} />
+                  </TouchableOpacity>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => router.push("Settings")}>
           <Image source={require("../assets/settings.png")} style={styles.notif} />
@@ -31,14 +39,14 @@ const Account: React.FC = () => {
 
       {/* Main Content Area */}
       <View style={styles.mainContent}>
-        <TouchableOpacity style={styles.button} onPress={() => router.push("Signin")}>
+        <TouchableOpacity style={styles.button} onPress={() => handleSignOut()}>
           <Text>Logout</Text>
         </TouchableOpacity>
       </View>
 
       {/* Bottom Navigation Bar */}
       <View style={styles.topBar}>
-        <TouchableOpacity onPress={() => router.push("Welcome")}>
+        <TouchableOpacity onPress={() => router.push("StudyMethods")}>
           <Image source={require("../assets/home.png")} style={styles.notif} />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => router.push("calender")}>

@@ -6,6 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "scheme": "focus-space",
     "plugins": [
       [
         "expo-router"
@@ -25,10 +26,20 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.ahmed100th.FocusSpace"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "65e4f41b-7b4e-41e4-bb8d-9d2bf72ad109"
+      }
+    },
+    "owner": "ahmed100th"
   }
 }

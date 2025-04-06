@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { View, StyleSheet, TouchableOpacity, Dimensions, Image, Text } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Calendar, LocaleConfig } from 'react-native-calendars';
+import { Calendar } from 'react-native-calendars';
 
 const { width } = Dimensions.get('window');
 
@@ -20,7 +20,9 @@ const Calender: React.FC = () => {
       {/* Top Navigation Bar */}
       <View style={styles.topBar}>
         <TouchableOpacity>
-          {/* Placeholder for any action */}
+          <TouchableOpacity onPress={() => router.back()}>
+                    <Image source={require("../assets/back.png")} style={styles.notif} />
+                  </TouchableOpacity>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => router.push("Settings")}>
           <Image source={require("../assets/settings.png")} style={styles.notif} />
@@ -75,7 +77,7 @@ const Calender: React.FC = () => {
 
       {/* Bottom Navigation Bar */}
       <View style={styles.topBar}>
-        <TouchableOpacity onPress={() => router.push("Welcome")}>
+        <TouchableOpacity onPress={() => router.push("StudyMethods")}>
           <Image source={require("../assets/home.png")} style={styles.notif} />
         </TouchableOpacity>
         <TouchableOpacity>

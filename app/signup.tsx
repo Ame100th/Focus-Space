@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useState } from "react";
 import { useRouter } from 'expo-router';
 import {
   View,
@@ -10,7 +10,7 @@ import {
   Dimensions,
   SafeAreaView,
 } from "react-native";
-import { getUser, createuser } from "../lib/supabase_crud";
+import {signUp } from "../lib/supabase_auth";
 
 const { width } = Dimensions.get("window");
 
@@ -22,22 +22,9 @@ const Signup: React.FC = () => {
   const [userData, setUserData] = useState<any>(null);
 
   const router = useRouter();
-
-  // Fetch user data on component mount
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const data = await getUser();
-        setUserData(data);
-      } catch (error) {
-        console.error("Error fetching user data", error);
-      }
-    };
-    fetchUserData();
-  }, []);
-
   // Handles user signup by validating input and creating a new user
   const handleSignup = async () => {
+    
     const emailRegex = /^[a-zA-Z0-9_.]+[@]{1}[a-zA-Z0-9_.]+\..{3}$/;
     const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*\(\)+_\-=\[\]{};':"\\|,.<>\/?]).+$/;
 
@@ -64,12 +51,15 @@ const Signup: React.FC = () => {
       return;
     }
     
-    try {
-      await createuser({ firstname, lastname, email, password });
-      router.push({ pathname: "Welcome", params: { email } });
-    } catch (error) {
-      console.error("Error creating user", error);
+    signUp(email, password)
+    .then((user) => {
+      router.push({ pathname: "StudyMethods", params: { email } });
+      console.log(user, "User signed up successfully");
+    })
+    .catch((error) => {
+      console.error("Error creating user:", error);
     }
+    );
   };
 
   return (
