@@ -112,13 +112,21 @@ const Signin: React.FC<SignProps> = ({ setIsSignedIn, setUsername }) => {
         <View>
           <TouchableOpacity>
             <Text style={styles.googletext}>
+              <Text style={{ color: "gray" }}>G</Text>
+              <Text style={{ color: "gray" }}>o</Text>
+              <Text style={{ color: "gray" }}>o</Text>
+              <Text style={{ color: "gray" }}>g</Text>
+              <Text style={{ color: "gray" }}>l</Text>
+              <Text style={{ color: "gray" }}>e</Text>
+            </Text>
+            {/* <Text style={styles.googletext}>
               <Text style={{ color: "#4285F4" }}>G</Text>
               <Text style={{ color: "#EA4335" }}>o</Text>
               <Text style={{ color: "#FBBC05" }}>o</Text>
               <Text style={{ color: "#4285F4" }}>g</Text>
               <Text style={{ color: "#34A853" }}>l</Text>
               <Text style={{ color: "#EA4335" }}>e</Text>
-            </Text>
+            </Text> */}
           </TouchableOpacity>
         </View>
         <TouchableOpacity onPress={() => router.push("StudyMethods")}>
@@ -196,6 +204,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
   },
   googletext: {
+    textDecorationLine: "line-through",
     fontWeight: "bold",
     marginBottom: 55,
     marginTop: 5,

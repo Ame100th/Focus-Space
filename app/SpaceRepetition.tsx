@@ -7,9 +7,7 @@ import { useRouter } from 'expo-router';
 import supabase from '../lib/supabase';
 import { SrsItemRecord, getDueSrsItems, updateSrsItem, addDays, addSrsItem } from '../lib/srs_crud';
 import { User } from '@supabase/supabase-js';
-import { Session } from '@google/genai';
 
-const { width } = Dimensions.get('window');
 
 
 
@@ -201,8 +199,8 @@ const SpaceRepetition: React.FC = () => {
             <Button title="Reveal Answer" onPress={() => setShowAnswer(true)} color="#19a0ae"/>
           ) : (
             <>
-              <Button title="Forgot" onPress={() => handleFeedback('Forgot')} color="#d9534f" disabled={isLoading}/>
-              <Button title="Remembered" onPress={() => handleFeedback('Remembered')} color="#5cb85c" disabled={isLoading}/>
+              <Button title="Forgot" onPress={() => handleFeedback('Forgot')} color="#abdbe3" disabled={isLoading}/>
+              <Button title="Remembered" onPress={() => handleFeedback('Remembered')} color="#2596be" disabled={isLoading}/>
             </>
           )}
         </View>

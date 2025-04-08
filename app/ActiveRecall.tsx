@@ -5,7 +5,7 @@ import {useFonts} from 'expo-font';
 
 const { width } = Dimensions.get('window');
 const LAMBDA_ENDPOINT_URL = 'https://ih1rkg927b.execute-api.us-east-2.amazonaws.com/myAppGenerateQuestionsFunction';
-const MODEL_NAME = 'gemini-2.5-pro-preview-03-25';
+// const MODEL_NAME = 'gemini-2.5-pro-preview-03-25';
 
 const ActiveRecall: React.FC = () => {
   const router = useRouter();

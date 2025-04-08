@@ -32,6 +32,9 @@ const StudyMethods: React.FC = () => {
         <TouchableOpacity onPress={() => router.back()}>
           {/* <Image source={require("../assets/back.png")} style={styles.notif} /> */}
         </TouchableOpacity>
+        <TouchableOpacity onPress={() => router.push("Settings")}>
+                  <Image source={require("../assets/settings.png")} style={styles.notif} />
+                </TouchableOpacity>
       </View>
 
       {/* Main Content Area */}
